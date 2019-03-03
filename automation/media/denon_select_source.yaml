@@ -1,0 +1,19 @@
+# This webhook automation accepts a post from an IFTTT recipe named "LG TV select source".
+# The recipe posts to this webhook with data for the source to select on the LG TV.
+
+id: denon select source 
+alias: Denon Select Source
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482DNSRC
+# action:
+# - data_template:       
+      # entity_id: media_player.lg_tv
+      # source: '{{trigger.json.source}}'
+  # service: media_player.select_source  
+action:
+- data_template:
+    source: '{{trigger.json.source}}'
+  service: python_script.denon_source
+  

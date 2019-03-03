@@ -1,0 +1,22 @@
+id: morning_heat_toggle
+alias: Calendar - Morning Heater Automation On/Off
+# Turns the 'automation.morning_heat_on' automation to an on or off state
+# based on a calendar item in Google
+initial_state: 'on'
+trigger:
+    platform: state
+    entity_id: calendar.frank_snyder_nbt
+    to: 'on'   
+condition:
+    condition: template
+    value_template: "{{states.calendar.frank_snyder_nbt.attributes.message|regex_search('morning heat', 'ignorecase')}}"    
+action:
+- data:
+    entity_id: automation.morning_heat_on
+  service_template: >  
+    {% if states.calendar.frank_snyder_nbt.attributes.message|regex_search('off', 'ignorecase') %}
+      automation.turn_off
+    {%- else -%}
+      automation.turn_on
+    {%- endif %}  
+  

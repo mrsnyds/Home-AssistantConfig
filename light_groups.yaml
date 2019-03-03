@@ -1,0 +1,115 @@
+  - platform: group
+    name: Downstairs Lights
+    entities:
+      - light.dining_room_dining_room
+      - light.family_room_ceiling_fan_light
+      - light.family_room_chair_lamp
+      - light.family_room_fireplace
+      - light.family_room_floor_lamp
+      - light.family_room_sofa_lamp
+      - light.family_room_spotlights
+      - light.front_foyer_foyer_star
+      - light.garage_entry_garage_entry
+      - light.kitchen_cabinet
+      - light.kitchen_ceiling
+      - light.kitchen_table
+      - light.living_room_pepe
+      - light.living_room_sue
+
+  - platform: group
+    name: Upstairs Lights
+    entities:
+      - light.master_bedroom_night_stand
+      - light.master_bathroom_shower_lights   
+      - light.master_bathroom_vanity_lights   
+      - light.upstairs_hallway_upstairs_hallway
+      - light.guest_room_guest_room_light           
+
+  - platform: group
+    name: Outside Lights
+    entities:
+      - light.patio_back_door
+      - light.patio_deck_lights
+      - light.exterior_front_door
+      
+  - platform: group
+    name: Patio Lights
+    entities:
+      - light.patio_back_door
+      - light.patio_deck_lights
+      
+  - platform: group
+    name: Family Room Lights
+    entities:
+      - light.family_room_chair_lamp
+      - light.family_room_sofa_lamp
+      - light.family_room_floor_lamp
+      - light.family_room_spotlights
+      - light.family_room_fireplace
+      - light.family_room_ceiling_fan_light        
+    
+  - platform: group
+    name: Living Room Lights
+    entities:
+      - light.living_room_pepe
+      - light.living_room_sue
+ 
+  - platform: group
+    name: Kitchen Lights
+    entities:
+      - light.kitchen_cabinet
+      - light.kitchen_ceiling
+      - light.kitchen_table
+
+  - platform: group
+    name: Entryway Lights
+    entities:
+      - light.front_foyer_foyer_star
+      - light.garage_entry_garage_entry
+      
+  - platform: group
+    name: Dining Room Lights
+    entities:
+      - light.dining_room_dining_room
+      
+  - platform: group
+    name: Bedroom Lights
+    entities:
+      - light.master_bedroom_night_stand
+      - light.master_bathroom_shower_lights   
+      - light.master_bathroom_vanity_lights
+      
+  - platform: group
+    name: Bathroom
+    entities:    
+      - light.master_bathroom_vanity_lights
+      - light.master_bathroom_shower_lights   
+ 
+  - platform: group
+    name: Hallway Guest
+    entities:  
+      - light.upstairs_hallway_upstairs_hallway
+      - light.guest_room_guest_room_light      
+
+##This group and light switches should be removed if the 
+##smart plugs are redeployed.
+  - platform: group
+    name: Christmas Lights
+    entities:
+      - light.dining_room_tree
+      # - light.christmas_tree 
+      # - light.kitchen_tree  
+      # - light.merry_and_bright      
+      
+  - platform: switch
+    name: Dining Room Tree
+    entity_id: switch.dining_room_tree 
+  - platform: switch
+    name: Christmas Tree
+    entity_id: switch.frank_wemo     
+  - platform: switch
+    name: Kitchen Tree
+    entity_id: switch.kitchen_tree
+  - platform: switch
+    name: Merry And Bright
+    entity_id: switch.merry_and_bright      

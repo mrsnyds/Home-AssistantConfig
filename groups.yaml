@@ -1,0 +1,60 @@
+  home:
+    name: Anyone Home
+    view: no
+    entities:
+      - device_tracker.1921681111
+      - device_tracker.192_168_1_115
+      - device_tracker.alexandasiphone_2      
+      - device_tracker.ellendunsiphone
+      - device_tracker.iphone_4
+      - device_tracker.google_maps_109448847750537552828
+      - device_tracker.google_maps_115006492650333848573
+      - device_tracker.iphone
+      - device_tracker.c7fdf446c7d140d79be5ca770da0a9e6
+      
+      
+  garmin:
+    name: Garmin IQ Entities
+    entities:
+      - script.close_garage
+      - script.open_garage  
+      - switch.garage_door      
+      - switch.merry_and_bright      
+      - media_player.lg_tv
+      - switch.sony_tv     
+      - switch.my_pc
+
+  kathy_garmin:
+    name: Kathy Garmin IQ Entities
+    entities:
+      - script.close_garage
+      - script.open_garage      
+      - switch.merry_and_bright    
+      - switch.sony_tv     
+      - media_player.lg_tv
+      
+  not_home_on:
+    name: Entities Left On When Not Home
+    entities:
+      - light.downstairs_lights
+      - light.upstairs_lights
+      - light.patio_deck_lights
+      - media_player.lg_tv
+      - switch.sony_tv      
+      - media_player.denon_main
+      - media_player.denon_remote
+      - switch.coffee_wemo
+      - switch.my_pc
+      - switch.merry_and_bright
+
+  not_home_random:
+    name: Entities Left On Except Random Lights
+    entities:
+      - light.patio_deck_lights
+      - media_player.lg_tv
+      - switch.sony_tv            
+      - media_player.denon_main
+      - media_player.denon_remote
+      - switch.coffee_wemo
+      - switch.my_pc
+      - switch.merry_and_bright

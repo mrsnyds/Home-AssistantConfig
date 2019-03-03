@@ -1,0 +1,82 @@
+pause_roku:
+  alias: Pause Roku
+  sequence:
+  - data:
+      entity_id: media_player.family_room
+    service: media_player.media_play_pause
+  - data:
+      entity_id:
+      - light.family_room_chair_lamp
+      - light.family_room_fireplace
+      - light.family_room_floor_lamp
+      - light.family_room_sofa_lamp
+      - light.family_room_spotlights
+      - light.kitchen_cabinet
+      - light.kitchen_ceiling
+      - light.kitchen_table
+      store_name: roku_pause_store
+    service: python_script.light_store
+  - data:
+      brightness: 255
+      entity_id: light.family_room_chair_lamp
+    service: light.turn_on
+  - data:
+      brightness: 255
+      entity_id: light.family_sofa_lamp
+    service: light.turn_on
+  - data:
+      brightness: 255
+      entity_id: light.kitchen_table
+    service: light.turn_on
+  - data:
+      brightness: 255
+      entity_id: light.kitchen_cabinet
+    service: light.turn_on
+resume_roku:
+  alias: Resume Roku
+  sequence:
+  - data:
+      entity_id: media_player.family_room
+    service: media_player.media_play_pause
+  - data:
+      store_name: roku_pause_store
+      operation: restore
+    service: python_script.light_store
+roku_pause_lights:
+  alias: Roku Pause Light Store
+  sequence:
+  - data:
+      entity_id:
+      - light.family_room_chair_lamp
+      - light.family_room_fireplace
+      - light.family_room_floor_lamp
+      - light.family_room_sofa_lamp
+      - light.family_room_spotlights
+      - light.kitchen_cabinet
+      - light.kitchen_ceiling
+      - light.kitchen_table
+      store_name: roku_pause_store
+    service: python_script.light_store
+  - data:
+      brightness: 255
+      entity_id: light.family_room_chair_lamp
+    service: light.turn_on
+  - data:
+      brightness: 255
+      entity_id: light.family_sofa_lamp
+    service: light.turn_on
+  - data:
+      brightness: 255
+      entity_id: light.kitchen_table
+    service: light.turn_on
+  - data:
+      brightness: 255
+      entity_id: light.kitchen_cabinet
+    service: light.turn_on
+roku_resume_lights:
+  alias: Roku Resume Lights
+  sequence:
+  - data:
+      store_name: roku_pause_store
+      operation: restore
+    service: python_script.light_store

@@ -1,0 +1,35 @@
+# This webhook automation accepts a post from an IFTTT recipe named "Denon Volume Set".
+# The recipe posts to this webhook with data to be passed to python_script.denon_volume.
+
+id: denon volume
+alias: Denon Volume Select
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482DENVOL
+action:
+- data_template:
+    volume_command: '{{trigger.json.volume_command}}'
+    direction: '{{trigger.json.direction}}'
+  service: python_script.denon_volume
+
+    # update_time: '12/12/2012 at 12:6'  
+    # commute_miles: '33333' 
+  # service: python_script.work_days  
+  
+ 
+# The ingredients here are an IFTTT post with a json key/value of "volume": 0.nnn,
+# that post to webhook ending in DENVOL, with a text string that can be parsed in
+# the python script to bump the volume, or set volume to a specific number.
+# *** Will need to see if IFTTT recipe with text and number ingredients can work if I 
+# don't always have both. I imagine commands like ...
+    # "increase the volume"
+    # "increase a litte bit/more"
+    # "set volume to 61"
+# FIRST STEP IS TO TEST INPUTTING VOICE TO IFTTT TO SEE WHAT KIND OF VALUES
+# COME BACK FROM VARIOUS COMMANDS ... THEN FIGURE OUT HOW TO PARSE THEM	
+# Make the TV $ ... louder, softer, quiter, a little louder, a little softer, a little quiter, or numbers like "60", "45"
+# Turn $ the TV ... down, up
+# Turn the TV $ ... up, down, down a little bit, down a bit, down again, up again
+    
+  

@@ -1,0 +1,76 @@
+id: garage_status
+alias: Garage Status Changed
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482NX
+  
+action:
+    
+# Check to increment input number    
+- entity_id: input_number.garage_closed
+  service_template: >
+    {%- if (states("binary_sensor.garage_door") == "off") 
+    and (trigger.data.garage == "OFF") -%}
+      input_number.increment
+    {%- elif (states("binary_sensor.garage_door") == "on") 
+    and (trigger.data.garage == "ON") -%}    
+      input_number.decrement
+    {%- else -%}
+      homeassistant.update_entity
+    {%- endif -%}
+  
+# Determine which mqtt update to do     
+- data_template:
+    topic: nexx/status
+    payload: >
+      {%- if (trigger.data.garage == "OFF")
+      and (states("input_number.garage_closed")| int > -1)-%}
+        OFF
+      {%- elif (trigger.data.garage == "OFF")
+      and (states("input_number.garage_closed")| int < 0) -%}
+        ON
+      {%- elif (trigger.data.garage == "ON")
+      and (states("input_number.garage_closed")| int > 0) -%}
+        OFF     
+      {%- else -%}
+        ON
+      {%- endif -%}      
+    qos: 2
+    retain: '1'
+  service: mqtt.publish
+ 
+# Check to decrement input number    
+- entity_id: input_number.garage_closed
+  service_template: >
+    {%- if (trigger.data.garage == "ON")
+    and (states("input_number.garage_closed")|int > 0) -%}
+      input_number.decrement
+    {%- elif (trigger.data.garage == "OFF")
+    and (states("input_number.garage_closed")|int < 0) -%}  
+      input_number.increment    
+    {%- else -%}
+      homeassistant.update_entity
+    {%- endif -%}  
+     
+
+# Next up ... create logic for 2 opens in a row
+
+     
+ # {{ states("input_number.garage_closed") }}  
+
+
+
+     
+# To be continued ... increment/decrement can be    
+# used to keep track of how many successive "closed"
+# events fired in a row, and therefore how many 
+# subsequent "open" events to ignore.  
+
+# Need to consider the order of the mqtt message, 
+# versus the check of input number ...
+
+# First check to see if already closed and increment ...
+# Then do the mqtt with a data_template and ifs' to 
+# decide if payload will be ON or OFF ...
+# Then check to determine if should decrement.
+

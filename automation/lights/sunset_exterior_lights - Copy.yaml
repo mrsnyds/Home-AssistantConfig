@@ -1,0 +1,18 @@
+id: exterior_sunset
+alias: Exterior Lights On at Dark
+trigger:   
+  platform: sun
+  event: sunset
+  offset: '00:15:00'  
+action:
+- service: light.turn_on
+  entity_id: light.exterior_front_door
+  data:
+    brightness_pct: 45
+- service: light.turn_on
+  entity_id: light.patio_back_door
+  data:
+    brightness_pct: 35 
+- data:
+    entity_id: switch.dining_room_tree
+  service: switch.turn_on     

@@ -1,0 +1,13 @@
+id: aws wrkg_days 
+alias: AWS Workign Days Update
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482AWS2
+action:
+- data_template:
+    wrkg_days: '{{trigger.json.wrkg_days}}'
+    commute_miles: '{{trigger.json.commute_miles}}'
+    next_vacation: '{{trigger.json.next_vacation}}'
+    update_time: '{{trigger.json.update_time}}   '
+  service: python_script.work_days

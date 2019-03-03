@@ -1,0 +1,11 @@
+id: aws going up 
+alias: iOT Button Going Up
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482AWS
+action:
+- service_template: script.aws_{{trigger.json.aws}}   
+
+
+  

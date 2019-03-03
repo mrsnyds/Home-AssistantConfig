@@ -1,0 +1,40 @@
+hangout:
+  alias: Hangout
+  sequence:
+  - data:
+      entity_id: scene.family_room_hangout
+    service: scene.turn_on
+candlelight:
+  alias: Candlelight
+  sequence:
+  - data:
+      entity_id: scene.candlelight
+    service: scene.turn_on
+flash_lights:
+  alias: Flash Lights
+  sequence:
+  - data:
+      entity_id:
+      - light.kitchen_cabinet
+      - light.kitchen_ceiling
+      - light.kitchen_table
+      store_name: flash_store
+    service: python_script.light_store
+  - data:
+      entity_id:
+      - light.kitchen_cabinet
+      - light.kitchen_ceiling
+      - light.kitchen_table
+    service: light.toggle
+  - data:
+      operation: restore
+      store_name: flash_store
+    service: python_script.light_store
+  - delay: '30'
+  - data:
+      entity_id: light.garage_entry_garage_entry, light.front_foyer_foyer_star
+    service: light.turn_on
+  - delay: '300'
+  - data:
+      entity_id: light.garage_entry_garage_entry, light.front_foyer_foyer_star
+    service: light.turn_off    

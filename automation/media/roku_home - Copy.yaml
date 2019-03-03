@@ -1,0 +1,16 @@
+id: roku home
+alias: ROKU to Home
+initial_state: 'on'
+trigger:
+- platform: state
+  entity_id: media_player.lg_tv
+  from: 'playing'
+  to: 'off'
+action:
+- data:
+    entity_id: remote.basement_roku
+    command: home
+  service: remote.send_command
+
+    
+  # some

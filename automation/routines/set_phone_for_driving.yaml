@@ -1,0 +1,13 @@
+id: '1536857505007'
+alias: Set phone for driving
+trigger:
+- event_data: {}
+  event_type: get_phone_ready
+  platform: event
+condition: []
+action:
+- data:
+    message: phone for driving
+  service: notify.pushbullet
+- data: {}
+  service: script.phone_ready_garage

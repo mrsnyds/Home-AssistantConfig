@@ -1,0 +1,9 @@
+away_random_lights:
+  alias: Left the House At Night
+  sequence:
+  - data:
+      entity_id: automation.random_away_lights_chair_lamp, automation.random_away_lights_dining_room, automation.random_away_lights_hallway
+    service: automation.trigger
+  - data:
+      entity_id: automation.random_away_lights_kitchen,automation.random_away_lights_living_room,automation.random_away_lights_night_stand,automation.random_away_lights_guest_room
+    service: automation.trigger

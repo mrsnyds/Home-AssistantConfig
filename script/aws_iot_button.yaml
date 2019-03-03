@@ -1,0 +1,41 @@
+aws_single: 
+  alias: Going Up
+  sequence:
+  - data:
+      brightness_pct: 21
+      entity_id: light.master_bathroom_vanity_lights
+    service: light.turn_on
+  - data:
+      brightness_pct: 2
+      entity_id: light.upstairs_hallway_upstairs_hallway
+    service: light.turn_on
+  - data:
+      entity_id: light.downstairs_lights
+    service: light.turn_off
+  - data:
+      entity_id: light.christmas_lights
+    service: light.turn_off    
+  - data:
+      entity_id: light.dining_room_tree
+    service: light.turn_off      
+aws_double:
+  alias: iOT Double
+  sequence:
+  - data:
+      entity_id: scene.going_to_bed
+    service: scene.turn_on     
+aws_long:
+  alias: iOT Long
+  sequence:
+  - data:
+      entity_id: light.downstairs_lights
+    service: light.turn_off
+  - data:
+      entity_id: light.christmas_lights
+    service: light.turn_off 
+  - data:
+      entity_id: scene.going_to_bed
+    service: scene.turn_on   
+  - data:
+      entity_id: light.dining_room_tree
+    service: light.turn_off      

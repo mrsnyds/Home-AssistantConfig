@@ -1,0 +1,15 @@
+id: night stand lights
+alias: Night Stand Lights
+trigger: 
+  entity_id: light.master_bedroom_night_stand
+  platform: state  
+action:
+- data:
+    entity_id: switch.kitchen_tree
+  service_template: > 
+    {% if trigger.from_state.state == trigger.to_state.state %}
+      homeassistant.update_entity
+    {% else %}
+      switch.turn_{{states("light.master_bedroom_night_stand")}}
+    {% endif %}
+    

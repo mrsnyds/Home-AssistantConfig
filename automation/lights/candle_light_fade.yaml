@@ -1,0 +1,75 @@
+id: candlelight_face
+alias: Candle Light Fade In
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482CNDL
+action:
+
+# Gradually fade from current, to these brightnesses
+- service: python_script.light_fader
+  data:
+    entity_id: light.kitchen_table
+    end_level_pct: 12
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.front_foyer_foyer_star
+    end_level_pct: 28
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_spotlights
+    end_level_pct: 11
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_chair_lamp
+    end_level_pct: 15
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_sofa_lamp
+    end_level_pct: 15
+    transition: '00:15:00'
+- delay: '00:00:02'
+
+# Gradually fade from current, to OFF
+- service: python_script.light_fader
+  data:
+    entity_id: light.kitchen_cabinet
+    end_level_pct: 0
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.kitchen_ceiling
+    end_level_pct: 0
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.garage_entry_garage_entry
+    end_level_pct: 0
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_fireplace
+    end_level_pct: 0
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_floor_lamp
+    end_level_pct: 0
+    transition: '00:15:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_ceiling_fan_light
+    end_level_pct: 0
+    transition: '00:15:00'

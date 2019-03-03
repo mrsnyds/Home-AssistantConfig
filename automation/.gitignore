@@ -1,0 +1,10 @@
+# Whitelist everything, then exclude
+!*
+
+# Blacklist
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+zones.yaml
+google_calendars.yaml
+*.txt

@@ -1,0 +1,173 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Our House
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret my_latitude
+  longitude: !secret my_longitude  
+
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 108
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/New_York
+  # Customization file
+  customize: !include customize.yaml
+
+http:
+  base_url: !secret my_url 
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem  
+  
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Lovelace Card Custom Updater
+custom_updater:
+
+discovery:
+  ignore:
+    - igd
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+group: !include groups.yaml
+automation: !include_dir_list automation
+script: !include_dir_merge_named script
+zone: !include zones.yaml
+device_tracker: !include device_tracker.yaml
+light: !include light_groups.yaml
+switch: !include switches.yaml
+binary_sensor: !include binary_sensors.yaml
+wake_on_lan:
+notify: !include notifiers.yaml   
+
+# Inputs
+input_boolean:
+  guest_mode:
+    name: Guest Mode On
+    initial: 
+    icon: mdi:account-switch
+  test_toggle:
+    name: Test Toggle
+    initial: 
+    icon: mdi:test-tube
+      
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: yr 
+  #WAZE
+  - platform: waze_travel_time
+    origin: device_tracker.google_maps_109448847750537552828
+    destination: zone.work
+    region: 'US'
+    name: ETA NJM
+  - platform: waze_travel_time
+    origin: device_tracker.google_maps_109448847750537552828
+    destination: zone.home
+    region: 'US'
+    name: Frank ETA Home
+  - platform: waze_travel_time
+    origin: device_tracker.google_maps_115006492650333848573
+    destination: zone.home
+    region: 'US'
+    name: Kathy ETA Home 
+    
+# Text to speech
+tts:
+  - platform: google
+ 
+timer:
+  heater_off:
+    duration: '01:30:00'   
+    
+input_number:
+  garage_closed:
+    name: Garage Closed Repetition
+    min: -5
+    max: 5
+    step: 1         
+      
+## GOOGLE ===================     
+## Google Calendar
+google:
+  client_id: !secret google_cal_id
+  client_secret: !secret google_cal_secret 
+  
+## Google HOME
+googlehome:
+  devices:
+    - host: 192.168.1.122  
+    # - host: 192.168.1.148
+    # - host: 192.168.1.141  
+    # - host: 192.168.1.117
+    # - host: 192.168.1.113
+  
+#Cloud
+# cloud:
+  # google_actions:
+    # filter:
+      # include_domains:
+        # - switch
+        # - light
+        # - script
+        # - media_player  
+  
+## GOOGLE ===================
+  
+lutron_caseta:
+  host: 192.168.1.106
+  keyfile: /ssl/lutron/caseta.key
+  certfile: /ssl/lutron/caseta.crt
+  ca_certs: /ssl/lutron/caseta-bridge.crt  
+
+##ifttt Configuration
+ifttt:
+  key: !secret ifttt_key  
+  
+# Dark Sky Weather
+weather:
+  - platform: darksky
+    api_key: !secret darksky_key
+    units: us
+    latitude: !secret my_latitude
+    longitude: !secret my_longitude
+    mode: daily  
+    
+# Python
+python_script:
+
+## Media Players
+media_player:
+  # Denon AVR
+  - platform: denonavr
+    host: 192.168.1.107
+    name: Denon Main
+    show_all_sources: True
+    timeout: 2
+    zones:
+      - zone: Zone2
+        name: Denon Remote
+  # LG WebOS    
+  - platform: webostv
+    host: 192.168.1.125
+    name: LG TV
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: "44-FE-3B-30-24-A2"    
+    customize:
+      sources:
+        - Roku
+        - Chromecast
+        - Live TV
+
+# Custom Components
+retirement_countdown:
+  wrkg_days: 'refreshing ... '
+  commute_miles: 'refreshing ... '  
+  next_vacation: 'refreshing ... '
+  update_time: 'refreshing ... '    

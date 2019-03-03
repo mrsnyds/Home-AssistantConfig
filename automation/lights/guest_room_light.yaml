@@ -1,0 +1,19 @@
+id: guest room light
+alias: Guest Room Light
+trigger:
+# - event_data:
+    # entity_id: light.guest_room_guest_room_light
+  # event_type: state_changed
+  # platform: event
+  entity_id: light.guest_room_guest_room_light
+  platform: state   
+action:
+- data:
+    entity_id: switch.guest_room_lamp
+  service_template: > 
+    {% if trigger.from_state.state == trigger.to_state.state %}
+      homeassistant.update_entity
+    {% else %}
+      switch.turn_{{states("light.guest_room_guest_room_light")}}
+    {% endif %}
+        

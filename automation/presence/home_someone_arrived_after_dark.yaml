@@ -1,0 +1,25 @@
+id: someone_arrived
+alias: Home - Someone Arrived
+trigger:
+- entity_id: group.home
+  platform: state
+  to: home
+condition:
+- after: sunset
+  after_offset: -00:40:00
+  condition: sun
+action:
+# This first action can only fire if the trigger was from nobody home, to home
+- data:
+    entity_id: light.upstairs_lights, light.downstairs_lights
+  service: light.turn_off
+- delay: '2'
+- data:
+    entity_id: light.garage_entry_garage_entry, light.front_foyer_foyer_star
+  service: light.turn_on
+- delay: '300'
+- data:
+    entity_id: light.garage_entry_garage_entry, light.front_foyer_foyer_star
+  service: light.turn_off
+
+

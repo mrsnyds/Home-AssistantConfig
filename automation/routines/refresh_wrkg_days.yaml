@@ -1,0 +1,14 @@
+id: refresh_wrkg_days
+alias: Refresh Wrkg Days on Restart
+trigger:
+- platform: homeassistant    
+  event: start
+condition: []
+action:
+- data_template: 
+    target: "arn:aws:lambda:us-west-2:152624716237:function:myHassWebhook"  
+    data: 
+      no_message: "restart refresh"
+    title: "Calling the working day refresh"
+    message: "restart refresh"
+  service: notify.aws_lambda_1

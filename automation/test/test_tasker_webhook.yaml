@@ -1,0 +1,60 @@
+id: test tasker webhook
+alias: Test Tasker Webhook
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482TST
+####  THESE LINES WORKED WITH TASKER CONTENT TYPE application/json AND A 
+####  STRING COMPOSED LIKE "{'key': 'value'}"
+# condition:
+  # condition: template  
+  # value_template: '{{ (trigger.json | string) | replace ("{''","") | replace ("''}","")  == ''jerry'' }}'
+# action:
+# - data_template:
+    # message: '{{ trigger.json  }}'
+###   THESE LINES WORKED WITH FORM DATA AND THE ASSOCIATED TASKER FORM CONTENT TYPE
+### WITH DATA THAT LOOKED LIKE ...
+###   jerry=whatever
+###   bob=whatnot           .......... the form data let's me referene a specific value!!!    
+# condition:
+  # condition: template  
+  # value_template: '{{ trigger.data.bob == ''OK'' }}'
+# action:
+# - data_template:
+    # message: 'Jerry says {{ trigger.data.jerry }}, but Bob really needs to say {{trigger.data.bob  }}'
+  # service: notify.pushbullet
+
+action:
+- data_template:
+    message: >
+      {% if trigger.data.bob  == 'OK' %}
+        Bob is AOK!!
+      {% else %}
+        Jerry says {{ trigger.data.jerry }} .
+      {% endif %}        
+     
+  service: notify.pushbullet  
+  
+
+# {% if is_state("device_tracker.paulus", "home") and
+      # is_state("device_tracker.anne_therese", "home") -%}
+  # You are both home, you silly
+# {%- else -%}
+  # Anne Therese is at {{ states("device_tracker.anne_therese") }}
+  # Paulus is at {{ states("device_tracker.paulus") }}
+# {%- endif %}  
+  
+# {% if is_state("device_tracker.paulus", "home") and
+      # is_state("device_tracker.anne_therese", "home") -%}
+  # You are both home, you silly
+# {%- else -%}
+  # Anne Therese is at {{ states("device_tracker.anne_therese") }}
+  # Paulus is at {{ states("device_tracker.paulus") }}
+# {%- endif %}
+
+# MORE TEMPLATE TESTING
+# {{state_attr('media_player.denon_main','volume_level')}} 
+
+# {{now()}}} 
+
+# {{states.media_player.denon_main.state_with_unit}}

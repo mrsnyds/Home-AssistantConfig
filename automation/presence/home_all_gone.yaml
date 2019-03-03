@@ -1,0 +1,44 @@
+id: all_gone_stuff_on
+alias: Home - All Gone Stuff On
+# If after 15 minutes of nobody home, there are any items 
+# left on in the group.not_home_on, send an SMS alert.  But note
+# the use of a second group ... group.not_home_random ... in the time
+# frame between 18:00 - 23:00 when random lights are on. The SMS is only 
+# sent if some device other than random lights is on.
+initial_state: 'on'
+trigger:
+- entity_id: group.home
+  platform: state
+  to: 'not_home'
+  for:
+    hours: 0
+    minutes: 15
+    seconds: 0
+condition:
+  condition: template
+  value_template: '{{ is_state("group.not_home_on", "on") }}'
+action:
+- data_template:
+    message: >
+      {%- if now().hour | int in range(0,18)
+          or now().hour | int == 23 -%} 
+        MESSAGE FROM YOUR HOUSE: Nobody (that we track) has been home for over
+        15 minutes, but stuff is on.  Check here:
+        https://mrsnyds.duckdns.org:8123/lovelace/0
+      {%- elif is_state("group.not_home_random", "on")  -%}
+        MESSAGE FROM YOUR HOUSE: I am turning your lights on and off randomly,
+        which means you are away, but other stuff is on.  Don't turn the lights 
+        off (I'll do that later), but you can turn off other items here:
+        https://mrsnyds.duckdns.org:8123/lovelace/0      
+      {%- else -%}
+        "Only random lights are on, everything else is off - not sending notification"
+      {%- endif -%}      
+  service_template: > 
+      {%- if now().hour | int in range(0,18)
+          or now().hour | int == 23 -%} 
+        notify.clicksend
+      {%- elif is_state("group.not_home_random", "on")  -%}
+        notify.clicksend     
+      {%- else -%}
+        system_log.write
+      {%- endif -%}

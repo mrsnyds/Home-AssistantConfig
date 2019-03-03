@@ -1,0 +1,23 @@
+# This webhook accepts message data to be used in a post data to an AWS
+# Lambda function that will REQUEST a Waze ETA message to be sent via
+# SMS using ClickSend.  The client making the post (either Tasker or 
+# an IFTTT request) will send the text to be used in the SMS as "message"
+# and HASS will send that data along to AWS, and will include the WAZE
+# travel time.
+id: TEST request waze_eta 
+alias: TEST Request Waze ETA
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482WZ22
+action:
+- data_template: 
+    target: "arn:aws:lambda:us-west-2:152624716237:function:waze_ETA"  
+    data:       
+      message: '{{trigger.data.message}}'
+      status: '{{trigger.data.status}}'
+      travel_time: "{{states('sensor.frank_eta_home')}}"
+      update_time: '{{states.sensor.frank_eta_home.last_updated}}'
+    title: "asking lambda for ETA"
+    message: "add travel time to now for ETA"
+  service: notify.aws_lambda_1

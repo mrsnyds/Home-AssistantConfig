@@ -1,0 +1,10 @@
+id: christmas_lights
+alias: Christmas Lights
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482XM
+action:
+- data:
+    entity_id: light.christmas_lights
+  service_template: light.turn_{{trigger.data.activate}} 
+initial_state: 'on'

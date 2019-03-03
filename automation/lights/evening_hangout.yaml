@@ -1,0 +1,40 @@
+id: evening_hangout
+alias: Family Room Evening Hangout
+initial_state: 'on'
+trigger:
+- event: sunset
+  offset: 01:00:00
+  platform: sun
+condition:
+- condition: state
+  entity_id: group.home
+  state: home
+action:
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_chair_lamp
+    end_level_pct: 83
+    transition: '00:45:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_sofa_lamp
+    end_level_pct: 49
+    transition: '00:45:00'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_fireplace
+    end_level_pct: 35
+    transition: '00:45:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_floor_lamp
+    end_level_pct: 34
+    transition: '00:45:00'
+- delay: '00:00:02'
+- service: python_script.light_fader
+  data:
+    entity_id: light.family_room_spotlights
+    end_level_pct: 17
+    transition: '00:45:00'

@@ -1,0 +1,15 @@
+id: plex webhook parse
+alias: Plex Webhook Parse
+initial_state: 'off'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482
+action:
+- data_template:
+    payload_template: '{{ (trigger.data[''payload''] | string)[12:][:-2] | replace
+      ("\\\\", "\\") | replace ("\\\''", "''") | replace ("\\x","?") }}
+
+      '
+    topic: plex/update
+  service: mqtt.publish
+  

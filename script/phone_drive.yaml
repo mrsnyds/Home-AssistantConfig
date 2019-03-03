@@ -1,0 +1,13 @@
+phone_drive:
+  alias: Phone for Driving
+  sequence:
+  - data:
+      message: "phone for driving"
+    service: notify.pushbullet
+phone_ready_garage:
+  alias: Phone ready garage open
+  sequence:
+  - data:
+      event: Nexx_Open
+      value1: Hello World!
+    service: ifttt.trigger    

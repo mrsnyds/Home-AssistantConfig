@@ -1,0 +1,539 @@
+- platform: tplink
+  host: 192.168.1.156
+- platform: tplink
+  host: 192.168.1.128     
+- platform: template
+  switches:    
+    # NEXX Garage switch
+    garage_door:
+      value_template: "{{ is_state('binary_sensor.garage_door', 'on') }}"
+      friendly_name: Garage Door
+      turn_on:
+        service: ifttt.trigger
+        data: {"event":"Nexx_Open", "value1":"Hello World!"}
+      turn_off:
+        service: ifttt.trigger
+        data: {"event":"close_Nexx", "value1":"Hello World!"}  
+      icon_template: >-
+        {% if is_state('binary_sensor.garage_door', 'on') %}
+          mdi:garage-open
+        {% else %}
+          mdi:garage
+        {% endif %} 
+    # DELL Win 10 PC switch
+    my_pc:
+      value_template: "{{ is_state('binary_sensor.my_pc_ping', 'on') }}"
+      friendly_name: My PC
+      turn_on:
+        service: wake_on_lan.send_magic_packet
+        data:
+          mac: "F8-BC-12-A3-96-27"           
+      turn_off:
+        service: notify.pushbullet 
+        data: 
+          message: Sleep
+          title: PushBullet.Note.Sleep                        
+      icon_template: mdi:desktop-tower-monitor      
+    # SONY TV switch
+    sony_tv:
+      value_template: >
+        {{ (is_state('media_player.denon_main', 'on') and 
+        state_attr('media_player.denon_main', 'source') == 'Roku') 
+        or (is_state('media_player.denon_main', 'on') and 
+        state_attr('media_player.denon_main', 'source') == 'Sony TV')}}
+      friendly_name: Sony TV
+      turn_on:
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command: power
+      - delay: "00:00:01"            
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command: home           
+      - service: media_player.turn_on
+        data: 
+          entity_id: media_player.denon_main              
+      turn_off:
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command: home    
+      - delay: "00:00:01"
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command: power    
+      - service: media_player.turn_off
+        data: 
+          entity_id: media_player.denon_main         
+      icon_template: mdi:television     
+    # SONY TV PRIME
+    sony_prime:
+      value_template: "{{ state_attr('media_player.family_room', 'source') == 'Prime Video' }}"
+      friendly_name: Sony TV Prime Video
+      turn_on:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command:
+            - home
+            - right
+            - right
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television  
+    # SONY TV SLING
+    sony_sling:
+      value_template: "{{ state_attr('media_player.family_room', 'source') == 'Sling TV' }}"
+      friendly_name: Sony TV Sling
+      turn_on:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command:
+            - home
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television        
+     # SONY TV PLEX
+    sony_plex:
+      value_template: "{{ state_attr('media_player.family_room', 'source') == 'Plex Preview' }}"
+      friendly_name: Sony TV PLEX
+      turn_on:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command:
+            - home
+            - right
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television 
+     # SONY TV NETFLIX
+    sony_netflix:
+      value_template: "{{ state_attr('media_player.family_room', 'source') == 'Netflix' }}"
+      friendly_name: Sony TV Netflix
+      turn_on:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command:
+            - home
+            - right
+            - down
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television    
+     # SONY TV HBO GO
+    sony_homebox:
+      value_template: "{{ state_attr('media_player.family_room', 'source') == 'HBO GO' }}"
+      friendly_name: Sony TV HBO GO
+      turn_on:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command:
+            - home
+            - right
+            - down
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television          
+     # SONY TV YOUTUBE
+    sony_youtube:
+      value_template: "{{ state_attr('media_player.family_room', 'source') == 'YouTube' }}"
+      friendly_name: Sony TV YouTube
+      turn_on:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.family_room
+          command:
+            - home
+            - right
+            - down
+            - right
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.family_room
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television     
+    # Basement TV PRIME
+    basement_prime:
+      value_template: "{{ state_attr('media_player.roku_player', 'source') == 'Prime Video' }}"
+      friendly_name: Basement TV Prime Video
+      turn_on:
+      - data:
+          entity_id: media_player.lg_tv
+        service: media_player.turn_on        
+      - data:
+          entity_id: media_player.lg_tv
+          source: Roku              
+        service: media_player.select_source        
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.basement_roku
+          command:
+            - home
+            - right
+            - right
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television         
+    # Basement TV SLING
+    basement_sling:
+      value_template: "{{ state_attr('media_player.roku_player', 'source') == 'Sling TV' }}"
+      friendly_name: Basement TV Sling
+      turn_on:
+      - data:
+          entity_id: media_player.lg_tv
+        service: media_player.turn_on        
+      - data:
+          entity_id: media_player.lg_tv
+          source: Roku              
+        service: media_player.select_source        
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.basement_roku
+          command:
+            - home
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television        
+     # Basement TV PLEX
+    basement_plex:
+      value_template: "{{ state_attr('media_player.roku_player', 'source') == 'Plex Preview' }}"
+      friendly_name: Basement TV PLEX
+      turn_on:
+      - data:
+          entity_id: media_player.lg_tv
+        service: media_player.turn_on        
+      - data:
+          entity_id: media_player.lg_tv
+          source: Roku              
+        service: media_player.select_source        
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.basement_roku
+          command:
+            - home
+            - right
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television 
+     # Basement TV NETFLIX
+    basement_netflix:
+      value_template: "{{ state_attr('media_player.roku_player', 'source') == 'Netflix' }}"
+      friendly_name: Basement TV Netflix
+      turn_on:
+      - data:
+          entity_id: media_player.lg_tv
+        service: media_player.turn_on        
+      - data:
+          entity_id: media_player.lg_tv
+          source: Roku              
+        service: media_player.select_source        
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.basement_roku
+          command:
+            - home
+            - right
+            - down
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television    
+     # Basement TV HBO GO
+    basement_homebox:
+      value_template: "{{ state_attr('media_player.roku_player', 'source') == 'HBO GO' }}"
+      friendly_name: Basement TV HBO GO
+      turn_on:
+      - data:
+          entity_id: media_player.lg_tv
+        service: media_player.turn_on        
+      - data:
+          entity_id: media_player.lg_tv
+          source: Roku              
+        service: media_player.select_source        
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.basement_roku
+          command:
+            - home
+            - right
+            - down
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television          
+     # Basement TV YOUTUBE
+    basement_youtube:
+      value_template: "{{ state_attr('media_player.roku_player', 'source') == 'YouTube' }}"
+      friendly_name: Basement TV YouTube
+      turn_on:
+      - data:
+          entity_id: media_player.lg_tv
+        service: media_player.turn_on        
+      - data:
+          entity_id: media_player.lg_tv
+          source: Roku              
+        service: media_player.select_source        
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command
+      - delay: >
+          {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
+            00:00:05
+          {%- else -%}
+            00:00:02
+          {%- endif -%}        
+      - service: remote.send_command
+        data:
+          entity_id: remote.basement_roku
+          command:
+            - home
+            - right
+            - down
+            - right
+            - right
+            - select
+      turn_off:
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command        
+      icon_template: mdi:television  
+     # Basement TV Antenna
+    basement_antenna:
+      value_template: "{{ state_attr('media_player.lg_tv', 'source') == 'Live TV' }}"
+      friendly_name: Basement TV Antenna
+      turn_on:
+      - data:
+          entity_id: media_player.lg_tv
+        service: media_player.turn_on        
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command 
+      - delay: '00:00:03'     
+      - data:
+          entity_id: media_player.lg_tv
+          source: Live TV              
+        service: media_player.select_source
+      turn_off:
+      - data:
+          entity_id: media_player.lg_tv
+          source: Roku              
+        service: media_player.select_source      
+      icon_template: mdi:television         
+     # Basement TV Chromecast
+    basement_chromecast:
+      value_template: "{{ state_attr('media_player.lg_tv', 'source') == 'Chromecast' }}"
+      friendly_name: Basement TV Chromecast
+      turn_on:
+      - data:
+          entity_id: media_player.lg_tv
+        service: media_player.turn_on        
+      - data:
+          entity_id: remote.basement_roku
+          command: 
+            - home
+        service: remote.send_command 
+      - delay: '00:00:03'          
+      - data:
+          entity_id: media_player.lg_tv
+          source: Chromecast              
+        service: media_player.select_source
+      turn_off:
+      - data:
+          entity_id: media_player.lg_tv
+          source: Roku              
+        service: media_player.select_source      
+      icon_template: mdi:television   

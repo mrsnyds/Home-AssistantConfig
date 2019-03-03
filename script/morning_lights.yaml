@@ -1,0 +1,26 @@
+morning_lights:
+  alias: Morning Wakeup Lights
+  sequence:     
+  - condition: sun
+    before: sunrise      
+  - service: python_script.light_fader
+    data:
+      entity_id: light.kitchen_cabinet
+      start_level_pct: 0
+      end_level_pct: 50
+      transition: '00:15:00'
+  - delay: '00:05:00'
+  - service: python_script.light_fader
+    data:
+      entity_id: light.living_room_pepe
+      start_level_pct: 0
+      end_level_pct: 60
+      transition: '00:15:00'
+  - delay: '00:00:02'
+  - service: python_script.light_fader
+    data:
+      entity_id: light.living_room_sue
+      start_level_pct: 0
+      end_level_pct: 60
+      transition: '00:15:00'    
+      

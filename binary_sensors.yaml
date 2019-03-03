@@ -1,0 +1,13 @@
+- platform: mqtt
+  name: "Mazda BT"
+  state_topic: "phone/bluetooth"
+  device_class: connectivity
+- platform: mqtt
+  name: "Garage Door"
+  state_topic: "nexx/status"
+  device_class: garage_door  
+- platform: ping
+  name: My PC PING
+  host: 192.168.1.102
+  count: 2
+  scan_interval: 30 

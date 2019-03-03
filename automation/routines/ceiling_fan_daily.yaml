@@ -1,0 +1,17 @@
+id: ceiling_fan_daily
+alias: Daily Ceiling Fan
+# Circulate the air up or down through the high area of addition
+trigger:
+- platform: time
+  # Military time format. 
+  at: '02:30:00'  
+action:
+- data:
+    entity_id: switch.family_room_ceiling_fan
+  service: switch.turn_on 
+- delay: '02:00:00'  
+- data:
+    entity_id: switch.family_room_ceiling_fan
+  service: switch.turn_off   
+  
+

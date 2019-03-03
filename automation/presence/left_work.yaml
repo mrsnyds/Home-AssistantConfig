@@ -1,0 +1,12 @@
+id: '1537815684640'
+alias: Left Work
+trigger:
+- entity_id: device_tracker.google_maps_109448847750537552828
+  event: leave
+  platform: zone
+  zone: zone.work
+condition: []
+action:
+- data:
+    message: Left work
+  service: notify.pushbullet

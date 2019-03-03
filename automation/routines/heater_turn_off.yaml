@@ -1,0 +1,12 @@
+id: heater_switch_off
+alias: Heater Turn Off
+# Turn off the heater that is plugged into this switch when a specific "heater_off" timer finishes.  
+trigger:
+- platform: event
+  event_type: timer.finished
+  event_data:
+    entity_id: timer.heater_off
+action:
+- data:
+    entity_id: switch.merry_and_bright, switch.family_room_ceiling_fan
+  service: switch.turn_off    

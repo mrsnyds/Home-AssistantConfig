@@ -1,0 +1,27 @@
+# Ignore everything (with ' * '), then include (!) and exclude
+# folders and files
+*
+
+# Whitelist
+!*.yaml
+!.gitignore
+!*.md
+!*.py
+!*.pyc
+!automation/
+!custom_components/
+!python_scripts
+!script
+
+
+# Ignore folders.
+.storage
+.cloud
+.google.token
+
+# Blacklist
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+zones.yaml
+google_calendars.yaml

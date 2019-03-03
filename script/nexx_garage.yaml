@@ -1,0 +1,14 @@
+open_garage:
+  alias: Open Garage
+  sequence:
+  - data: 
+      event: "Nexx_Open"
+      value1: "Open the garage"
+    service: ifttt.trigger    
+close_garage:
+  alias: Close Garage
+  sequence:
+  - data: 
+      event: "close_Nexx"
+      value1: "Open the garage"
+    service: ifttt.trigger 

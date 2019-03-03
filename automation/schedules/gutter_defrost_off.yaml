@@ -1,0 +1,20 @@
+id: gutter_defrost
+alias: Calendar - Gutter Defrost Off/On
+initial_state: 'on'
+trigger:
+    platform: state
+    entity_id: calendar.frank_snyder_nbt
+    to: 'on'   
+condition:
+    condition: template
+    value_template: "{{states.calendar.frank_snyder_nbt.attributes.message|regex_search('gutter defrost', 'ignorecase')}}"    
+action:
+- data:
+    entity_id: switch.frank_wemo
+  service_template: >  
+    {% if states.calendar.frank_snyder_nbt.attributes.message|regex_search('off', 'ignorecase') %}
+      switch.turn_off
+    {%- else -%}
+      switch.turn_on
+    {%- endif %}  
+  

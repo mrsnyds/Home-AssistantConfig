@@ -1,0 +1,17 @@
+id: flash_home
+alias: Flash Home
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482FH
+condition:
+- after: '16:30'
+  before: '19:30'
+  condition: time
+  weekday:
+  - mon
+  - tue
+  - wed
+  - thu
+  - fri
+action:
+- service: script.flash_lights

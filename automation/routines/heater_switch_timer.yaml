@@ -1,0 +1,11 @@
+id: heater_switch_timer
+alias: Heater Switch Timer
+trigger:
+  platform: state  
+  entity_id: switch.merry_and_bright
+  from: 'off'
+  to: 'on'
+action:
+- data:
+    entity_id: timer.heater_off
+  service: timer.start
