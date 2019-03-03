@@ -1,0 +1,1 @@
+I am a developer by no means.  Uh-uh.  But I am having a blast learning Home Assistant and Python.  This GIT repository is my first commit of anything.  I started with HASS in a Docker, moved to an rPi with HASSBIAN when I couldn't get the Let's Encrypt thing working inside my QNAP Docker, and now am running on HASSIO with HASSOS.
