@@ -9,7 +9,9 @@ action:
     entity_id: switch.coffee_wemo
   service: switch.turn_on
 - delay: >
-      {%- if trigger.data.delay == 'delay' -%}
+      {%- if trigger is not defined -%}
+        00:00
+      {%- elif trigger.data.delay == 'delay' -%}
         00:30
       {%- elif trigger.data.delay == 'no_delay' -%}        
         00:00
@@ -18,7 +20,9 @@ action:
       {%- endif -%}   
 - service: script.morning_lights
 - delay: >
-      {%- if trigger.data.delay == 'delay' -%}
+      {%- if trigger is not defined -%}
+        02:30
+      {%- elif trigger.data.delay == 'delay' -%}
         02:00
       {%- elif trigger.data.delay == 'no_delay' -%}        
         02:30        

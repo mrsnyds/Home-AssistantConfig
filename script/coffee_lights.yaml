@@ -1,0 +1,10 @@
+coffee_lights:
+  alias: Coffee Wake Up
+  sequence:     
+  - service: homeassistant.update_entity
+    data:
+      entity_id: switch.coffee_wemo
+  - service: automation.trigger
+    data:
+      entity_id: automation.coffee_brewing
+## A script to call from Garmin IQ ... added to group "Garmin IQ Entities"

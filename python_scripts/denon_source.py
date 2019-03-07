@@ -1,3 +1,5 @@
+## 2019-03-03 Added pattern to select "Blu-ray"
+
 ##This Python Script Service gets called by an automation triggered
 ##by a webhook ID from IFTTT recipe to change the source on the Denon Recvr.
 ##
@@ -27,6 +29,8 @@ elif "chromecast" in source_command:
     source = "Chromecast"
 elif "tv" in source_command:
     source = "Sony TV"
+elif "blu" in source_command:
+    source = "Blu-ray"
 else:
     source = "Roku"
 
@@ -41,3 +45,4 @@ else:
 ## then call the media_player.select_source service
 service_data = {'entity_id': entity_id, 'source': source }
 hass.services.call('media_player', 'select_source', service_data, False)
+

@@ -18,7 +18,7 @@
     entities:
       - script.close_garage
       - script.open_garage  
-      - switch.garage_door      
+      - script.coffee_lights      
       - switch.merry_and_bright      
       - media_player.lg_tv
       - switch.sony_tv     

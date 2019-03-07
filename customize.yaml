@@ -59,3 +59,5 @@ binary_sensor.garage_door:
   hidden: true
 binary_sensor.my_pc_ping:
   hidden: true
+input_select.wyze_notification:
+  icon: mdi:camera

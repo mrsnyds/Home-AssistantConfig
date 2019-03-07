@@ -54,6 +54,17 @@ input_boolean:
     name: Test Toggle
     initial: 
     icon: mdi:test-tube
+input_select:
+  wyze_notification:
+    name: Wyze Notify
+    options:
+      - choose one
+      - Frank OFF
+      - Frank ON
+      - Kathy OFF
+      - Kathy ON
+    initial: choose one
+    icon: mdi:camera  
       
 # Sensors
 sensor:
@@ -74,7 +85,19 @@ sensor:
     origin: device_tracker.google_maps_115006492650333848573
     destination: zone.home
     region: 'US'
-    name: Kathy ETA Home 
+    name: Kathy ETA Home  
+  #Dark Sky
+  - platform: darksky
+    api_key: !secret darksky_key
+    forecast:
+      - 0
+    monitored_conditions:
+      - summary
+      - icon
+      - temperature  
+      - precip_probability
+      - precip_accumulation
+      - wind_speed
     
 # Text to speech
 tts:
