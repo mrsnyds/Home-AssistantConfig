@@ -6,6 +6,7 @@ Log of items changed since last commit:
 - tweaks to DarkSky sensors
 - added Skip Commercial script to Garmin groups
 - tweaks to switches that switch Roku apps'
+- removed 1 second delay from night stand lights automation
 - refactored Random Lights completely
 	 ... now using an automation to launch two scripts
 	 ... those scripts turn a light one with a random delay to turn off,
