@@ -1,0 +1,17 @@
+# This automation consumes an event from 'id: Family_Room_Sunset',
+# tests whether light is on or not, and if not, bring it up to 30%
+id: Family_Room_Sunset_Event
+alias: Family Room Sunset Event
+initial_state: 'on'
+trigger:
+  - platform: event
+    event_type: start_fam_room_sunset
+condition:
+- condition: template
+  value_template: "{{ is_state(trigger.event.data.entity_id, 'off') }}"
+action:
+- service: python_script.light_fader
+  data_template:
+    entity_id: '{{ trigger.event.data.entity_id }}'
+    end_level_pct: 30
+    transition: '00:05:00'  

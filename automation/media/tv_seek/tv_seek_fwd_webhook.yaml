@@ -1,0 +1,16 @@
+id: tv_seek_webhook_fwd
+alias: TV Seek Forward Webhook
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482TVSKFWD
+
+action:
+- event: TV_SEEK_FWD
+  event_data_template:
+    name: tvSeek
+    seek_command: "{{trigger.data.seek_command}}"      
+    tv_source: "{{states.media_player.family_room.attributes.source}}"
+        
+
+

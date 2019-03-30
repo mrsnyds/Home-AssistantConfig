@@ -1,0 +1,131 @@
+tv_fwd_prime_5_min:
+  alias: Prime Forward 5 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - up
+        - right
+        - enter
+  - delay: '00:00:37'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play           
+tv_rew_prime_5_min:
+  alias: Prime Rewind 5 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - up
+        - left
+        - enter
+  - delay: '00:00:37'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play  
+
+tv_fwd_prime_3_min:
+  alias: Prime Forward 3 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - up
+        - right
+        - enter
+  - delay: '00:00:22'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play            
+tv_rew_prime_3_min:
+  alias: Prime Rewind 3 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - up
+        - left
+        - enter
+  - delay: '00:00:22'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play  
+
+tv_fwd_prime_1_min:
+  alias: Prime Forward 1 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - up
+        - right
+        - enter
+  - delay: '00:00:07'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play            
+tv_rew_prime_1_min:
+  alias: Prime Rewind 1 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - up
+        - left
+        - enter
+  - delay: '00:00:07'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play      
+        
+tv_fwd_prime_30_sec:
+  alias: Prime Forward 30 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - up
+        - right
+        - enter
+  - delay: '00:00:04'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play          
+tv_rew_prime_30_sec:
+  alias: Prime Rewind 30 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - up
+        - left
+        - enter
+  - delay: '00:00:04'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play          

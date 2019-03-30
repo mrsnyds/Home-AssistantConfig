@@ -1,0 +1,17 @@
+id: lights_coffee
+alias: Morning Lights and Coffee
+initial_state: true
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482COFFEE
+action:
+- entity_id: switch.coffee_wemo
+  service_template: >
+    {%- if states("switch.coffee_wemo") == "on" -%}
+      homeassistant.update_entity
+    {%- else -%}
+      switch.turn_on
+    {%- endif -%} 
+- service: script.morning_lights  
+  
+

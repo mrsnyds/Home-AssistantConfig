@@ -7,6 +7,7 @@
 id: request waze_eta 
 alias: Request Waze ETA
 initial_state: 'on'
+
 trigger:
 - platform: webhook
   webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482WZ
@@ -21,3 +22,5 @@ action:
     title: "asking lambda for ETA"
     message: "add travel time to now for ETA"
   service: notify.aws_lambda_1
+  
+  

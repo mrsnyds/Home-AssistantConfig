@@ -1,0 +1,277 @@
+tv_fwd_sling_5_min:
+  alias: Sling Forward 5 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward
+  - delay:
+      milliseconds: 50  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward
+  - delay:
+      milliseconds: 50        
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward         
+  - delay: '00:00:05'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play           
+tv_rew_sling_5_min:
+  alias: Sling Rewind 5 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse
+  - delay:
+      milliseconds: 50  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse
+  - delay:
+      milliseconds: 50        
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse         
+  - delay: '00:00:05'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play
+
+tv_fwd_sling_3_min:
+  alias: Sling Forward 3 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward
+  - delay:
+      milliseconds: 50  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward
+  - delay:
+      milliseconds: 50        
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward         
+  - delay: '00:00:02'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play             
+tv_rew_sling_3_min:
+  alias: Sling Rewind 3 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse
+  - delay:
+      milliseconds: 50  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse
+  - delay:
+      milliseconds: 50        
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse         
+  - delay: '00:00:02'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play
+
+tv_fwd_sling_1_min:
+  alias: Sling Forward 1 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward
+  - delay:
+      milliseconds: 50  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward        
+  - delay: '00:00:02'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play             
+tv_rew_sling_1_min:
+  alias: Sling Rewind 1 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse
+  - delay:
+      milliseconds: 50  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse        
+  - delay: '00:00:02'
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play      
+        
+tv_fwd_sling_30_sec:
+  alias: Sling Forward 30 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward
+  - delay:
+      milliseconds: 25  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward        
+  - delay: 
+      milliseconds: 900
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play         
+tv_rew_sling_30_sec:
+  alias: Sling Rewind 30 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse
+  - delay:
+      milliseconds: 25  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - reverse        
+  - delay: 
+      milliseconds: 900
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play         
+
+tv_fwd_sling_20_sec:
+  alias: Sling Forward 20 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward
+  - delay:
+      milliseconds: 25  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward        
+  - delay: 
+      milliseconds: 700
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play 
+tv_rew_sling_20_sec:
+  alias: Sling Rewind 20 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward
+  - delay:
+      milliseconds: 25  
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward        
+  - delay: 
+      milliseconds: 700
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play         
+        
+tv_fwd_sling_10_sec:
+  alias: Sling Forward 10 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward       
+  - delay: 
+      milliseconds: 700
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play 
+tv_rew_sling_10_sec:
+  alias: Sling Rewind 10 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - forward      
+  - delay: 
+      milliseconds: 700
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:     
+        - play         

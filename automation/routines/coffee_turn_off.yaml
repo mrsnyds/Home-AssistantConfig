@@ -1,0 +1,12 @@
+id: coffee_switch_off
+alias: Coffee Turn Off
+# Turn off the Coffee Pot that is plugged into this switch when a specific "coffee_off" timer finishes.  
+trigger:
+- platform: event
+  event_type: timer.finished
+  event_data:
+    entity_id: timer.coffee_off
+action:
+- data:
+    entity_id: switch.coffee_wemo
+  service: switch.turn_off    

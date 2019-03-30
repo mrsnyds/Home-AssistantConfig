@@ -1,0 +1,88 @@
+id: tv_seek_fwd_action
+alias: TV Seek Forward Action
+initial_state: 'on'
+trigger:
+- platform: event
+  event_type: TV_SEEK_FWD
+action:
+- service_template: >
+    {%- if trigger.event.data.tv_source | regex_search("plex", ignorecase=True) -%}
+      {%- if trigger.event.data.seek_command | regex_search("3 min", ignorecase=True)-%}
+        script.tv_fwd_plex_3_min 
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("30 sec", ignorecase=True)-%}
+        script.tv_fwd_plex_30_sec
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("5 min", ignorecase=True)-%}
+        script.tv_fwd_plex_5_min
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("1 min", ignorecase=True)-%}
+        script.tv_fwd_plex_1_min
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("20 sec", ignorecase=True)-%}
+        script.tv_fwd_plex_20_sec
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("10 sec", ignorecase=True)-%}
+        script.tv_fwd_plex_10_sec  
+      {%- endif -%}
+    {%- elif trigger.event.data.tv_source | regex_search("sling", ignorecase=True) -%}
+      {%- if trigger.event.data.seek_command | regex_search("3 min", ignorecase=True)-%}
+        script.tv_fwd_sling_3_min 
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("30 sec", ignorecase=True)-%}
+        script.tv_fwd_sling_30_sec
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("5 min", ignorecase=True)-%}
+        script.tv_fwd_sling_5_min
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("1 min", ignorecase=True)-%}
+        script.tv_fwd_sling_1_min
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("20 sec", ignorecase=True)-%}
+        script.tv_fwd_sling_20_sec
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("10 sec", ignorecase=True)-%}
+        script.tv_fwd_sling_10_sec  
+      {%- endif -%}        
+    {%- elif trigger.event.data.tv_source | regex_search("netflix", ignorecase=True) -%}
+      {%- if trigger.event.data.seek_command | regex_search("3 min", ignorecase=True)-%}
+        script.tv_fwd_netflix_3_min 
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("30 sec", ignorecase=True)-%}
+        script.tv_fwd_netflix_30_sec
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("5 min", ignorecase=True)-%}
+        script.tv_fwd_netflix_5_min
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("1 min", ignorecase=True)-%}
+        script.tv_fwd_netflix_1_min
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("20 sec", ignorecase=True)-%}
+        script.tv_fwd_netflix_20_sec
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("10 sec", ignorecase=True)-%}
+        script.tv_fwd_netflix_10_sec  
+      {%- endif -%}      
+    {%- elif trigger.event.data.tv_source | regex_search("prime", ignorecase=True) -%}
+      {%- if trigger.event.data.seek_command | regex_search("3 min", ignorecase=True)-%}
+        script.tv_fwd_prime_3_min 
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("30 sec", ignorecase=True)-%}
+        script.tv_fwd_prime_30_sec
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("5 min", ignorecase=True)-%}
+        script.tv_fwd_prime_5_min
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("1 min", ignorecase=True)-%}
+        script.tv_fwd_prime_1_min
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("20 sec", ignorecase=True)-%}
+        script.tv_fwd_prime_20_sec
+      {%- endif -%}
+      {%- if trigger.event.data.seek_command | regex_search("10 sec", ignorecase=True)-%}
+        script.tv_fwd_prime_10_sec  
+      {%- endif -%}            
+    {%- else -%}
+      script.tv_seek_other
+    {%- endif -%}
+        

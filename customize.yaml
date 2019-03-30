@@ -61,3 +61,5 @@ binary_sensor.my_pc_ping:
   hidden: true
 input_select.wyze_notification:
   icon: mdi:camera
+script.commercial_skip:
+  friendly_name: Skip Commercial

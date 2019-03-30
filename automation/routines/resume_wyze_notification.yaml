@@ -1,0 +1,17 @@
+id: wyze_resume_notification
+alias: Wyze Resume Notification
+# Toggle the notification for Wyze Cam back on  
+# when timer finishes
+trigger:
+- platform: event
+  event_type: timer.finished
+  event_data:
+    entity_id: timer.wyze_pause_frank
+action:
+- service: notify.pushbullet
+  data:
+    message: wyze_notify_on
+- data:
+    entity_id: input_number.wyze_notification
+    value: 0
+  service: input_number.set_value    

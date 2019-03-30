@@ -1,0 +1,92 @@
+# Scripts for randomly turning three lights on/off in front of house
+random_lights_pepe:
+  alias: Random Pepe  
+  sequence:       
+    - service: light.turn_on
+      entity_id: light.living_room_pepe
+# Random delay before checking if we should turn on another light
+# and turn this one off.
+    - delay: "00:{{ range(10,59) | random | int }}:00"          
+# Only continue if state of group.home remains "not_home"
+# Also don't continue if it is 11PM or later
+    - condition: state
+      entity_id: 'group.home'
+      state: 'not_home'
+    - condition: template
+      value_template: "{{ now().hour | int < 23 }}"         
+ # If conditions pass, randomly select another light from the same group to turn on.       
+    - service_template: >      
+        {% set next_light = range(1, 3) | random | int %}
+        {% if next_light == 1 %}
+          script.random_lights_night_stand
+        {% else %}
+          script.random_lights_guest_room
+        {% endif %}           
+# A random short delay before turning the first light off ... overlaps looks more natural
+    - delay: "00:0{{ range(1,9) | random | int }}:00"
+# And then turn off the first light to end the sequence.
+# If someone came home, leave the light as it is.
+    - entity_id: light.living_room_pepe
+      service_template: >
+        {%- if (states("group.home") == 'home' or
+          now().hour | int >= 23) -%}
+          homeassistant.update_entity
+        {%- else -%}
+         light.turn_off
+        {%- endif -%}    
+
+random_lights_night_stand:
+  alias: Random Night Stand  
+  sequence:       
+    - service: light.turn_on
+      entity_id: light.master_bedroom_night_stand
+    - delay: "00:{{ range(10,59) | random | int }}:00"          
+    - condition: state
+      entity_id: 'group.home'
+      state: 'not_home'
+    - condition: template
+      value_template: "{{ now().hour | int < 23 }}"           
+    - service_template: >      
+        {% set next_light = range(1, 3) | random | int %}
+        {% if next_light == 1 %}
+          script.random_lights_pepe
+        {% else %}
+          script.random_lights_guest_room
+        {% endif %}           
+    - delay: "00:0{{ range(1,9) | random | int }}:00"
+    - entity_id: light.master_bedroom_night_stand
+      service_template: >
+        {%- if (states("group.home") == 'home' or
+          now().hour | int >= 23) -%}
+          homeassistant.update_entity
+        {%- else -%}
+         light.turn_off
+        {%- endif -%}
+        
+random_lights_guest_room:
+  alias: Random Guest Room  
+  sequence:       
+    - service: light.turn_on
+      entity_id: light.guest_room_guest_room_light
+    - delay: "00:{{ range(10,59) | random | int }}:00"          
+    - condition: state
+      entity_id: 'group.home'
+      state: 'not_home'
+    - condition: template
+      value_template: "{{ now().hour | int < 23 }}"           
+    - service_template: >      
+        {% set next_light = range(1, 3) | random | int %}
+        {% if next_light == 1 %}
+          script.random_lights_night_stand
+        {% else %}
+          script.random_lights_pepe
+        {% endif %}           
+    - delay: "00:0{{ range(1,9) | random | int }}:00"
+    - entity_id: light.guest_room_guest_room_light
+      service_template: >
+        {%- if (states("group.home") == 'home' or
+          now().hour | int >= 23) -%}
+          homeassistant.update_entity
+        {%- else -%}
+         light.turn_off
+        {%- endif -%}         

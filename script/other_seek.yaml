@@ -1,0 +1,16 @@
+tv_seek_other:
+  alias: TV Seek Other
+  sequence:       
+  - service: tts.google_say
+    data:
+      entity_id: media_player.family_room_speaker
+      message: 'Seeking by voice does not work on this channel'
+commercial_skip:
+  alias: Commercial Skip
+  sequence:        
+  - event: TV_SEEK_FWD
+    event_data_template:
+      name: tvSeek
+      seek_command: "3 minutes"     
+      tv_source: "{{states.media_player.family_room.attributes.source}}"      
+    

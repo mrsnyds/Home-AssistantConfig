@@ -1,0 +1,26 @@
+id: sunrise
+alias: Sunrise Routine
+trigger:   
+  platform: numeric_state
+  entity_id: sun.sun
+  value_template: "{{ state.attributes.elevation }}"
+  # Can be a positive or negative number
+  above: -4.0 
+  below: -2.0
+condition:
+  condition: time
+  # Can only fire in the morning
+  after: '00:00:00' 
+  before: '12:00:00'
+action:
+- service: light.turn_off
+  entity_id: light.exterior_front_door, light.patio_back_door
+# Turn Wyze Cam notifications back on
+- service: ifttt.trigger
+  data: {"event":"notify_on", "value1":"Hello World!"} 
+# Set boolean to indicate Sunrise Routine was triggered.
+# It will later be reset to off in "Reset Sunrise Boolean Triggered" automation 
+- service: input_boolean.turn_on
+  entity_id: input_boolean.sunrise_triggered
+
+    

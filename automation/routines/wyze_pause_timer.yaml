@@ -1,0 +1,30 @@
+id: wyze_pause_timer
+alias: Wyze Pause Notification Timer
+trigger:
+  platform: state  
+  entity_id: input_number.wyze_notification
+condition:
+  condition: numeric_state
+  entity_id: input_number.wyze_notification
+  above: 0
+action:
+- service: timer.cancel
+  data:
+    entity_id: timer.wyze_pause_frank
+- delay: '00:00:01'
+- service: timer.start
+  data_template:
+    entity_id: timer.wyze_pause_frank
+    duration: '{{(states("input_number.wyze_notification") | int) * 60}}'
+- service: ifttt.trigger
+  data: {"event":"notify_off", "value1":"Hello World!"}  
+    
+# Consists of these entities and automations:
+# - input_number.wyze_notification ... to select how long to pause
+# - timer.wyze_pause_frank ... to count down the time of the pause
+# - wyze_pause_timer.yaml ... this automation sets a timer and turns 
+#   notifications off via IFTTT Webhooks channel trigger to contact Wyze
+# - resume_wyze_notification.yaml ... triggered when timer finishes, it resets 
+#   input number to '0', and uses pushbullet to turn notifications back on
+# - wyze_pause_cancel.yaml ... triggered if the input number slider is set 
+#   to '0', it will cancel the timer and turn notifications back on.

@@ -76,15 +76,22 @@
     name: Bedroom Lights
     entities:
       - light.master_bedroom_night_stand
-      - light.master_bathroom_shower_lights   
-      - light.master_bathroom_vanity_lights
+      - light.kitchen_tree
       
   - platform: group
-    name: Bathroom
+    name: Bathroom Lights
     entities:    
       - light.master_bathroom_vanity_lights
       - light.master_bathroom_shower_lights   
  
+  - platform: group
+    name: Master Bedroom Lights
+    entities:
+      - light.master_bedroom_night_stand
+      - light.kitchen_tree
+      - light.master_bathroom_vanity_lights
+      - light.master_bathroom_shower_lights        
+      
   - platform: group
     name: Hallway Guest
     entities:  

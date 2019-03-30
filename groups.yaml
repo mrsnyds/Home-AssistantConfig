@@ -23,10 +23,13 @@
       - media_player.lg_tv
       - switch.sony_tv     
       - switch.my_pc
+      - script.commercial_skip
 
   kathy_garmin:
     name: Kathy Garmin IQ Entities
     entities:
+      - script.commercial_skip
+      - script.aws_single
       - script.close_garage
       - script.open_garage      
       - switch.merry_and_bright    
@@ -44,7 +47,6 @@
       - media_player.denon_main
       - media_player.denon_remote
       - switch.coffee_wemo
-      - switch.my_pc
       - switch.merry_and_bright
 
   not_home_random:
@@ -56,5 +58,5 @@
       - media_player.denon_main
       - media_player.denon_remote
       - switch.coffee_wemo
-      - switch.my_pc
       - switch.merry_and_bright
+ 

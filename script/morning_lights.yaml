@@ -5,10 +5,10 @@ morning_lights:
     before: sunrise      
   - service: python_script.light_fader
     data:
-      entity_id: light.kitchen_cabinet
+      entity_id: light.kitchen_table
       start_level_pct: 0
       end_level_pct: 50
-      transition: '00:15:00'
+      transition: '00:20:00'
   - delay: '00:05:00'
   - service: python_script.light_fader
     data:

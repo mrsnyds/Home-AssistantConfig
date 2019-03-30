@@ -1,0 +1,18 @@
+id: random_lights_end
+alias: Random Away Lights End
+
+trigger:
+- platform: time
+  at: '23:00:00'  
+
+condition:
+- condition: state
+  entity_id: group.home
+  state: not_home
+- condition: state
+  entity_id: input_boolean.guest_mode
+  state: 'off'
+
+action:
+- entity_id: light.upstairs_lights, light.downstairs_lights
+  service: light.turn_off

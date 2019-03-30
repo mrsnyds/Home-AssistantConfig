@@ -1,0 +1,221 @@
+tv_fwd_plex_5_min:
+  alias: Plex Forward 5 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right  
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right         
+        - play           
+tv_rew_plex_5_min:
+  alias: Plex Rewind 5 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left  
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left          
+        - play 
+
+tv_fwd_plex_3_min:
+  alias: Plex Forward 3 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right  
+        - play           
+tv_rew_plex_3_min:
+  alias: Plex Rewind 3 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left  
+        - play 
+
+tv_fwd_plex_1_min:
+  alias: Plex Forward 1 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - play           
+tv_rew_plex_1_min:
+  alias: Plex Rewind 1 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - play         
+        
+tv_fwd_plex_30_sec:
+  alias: Plex Forward 30 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - right 
+        - play         
+tv_rew_plex_30_sec:
+  alias: Plex Rewind 30 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - left 
+        - play          
+        
+tv_fwd_plex_20_sec:
+  alias: Plex Forward 20 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - play         
+tv_rew_plex_20_sec:
+  alias: Plex Rewind 20 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - play         
+        
+tv_fwd_plex_10_sec:
+  alias: Plex Forward 10 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - play         
+tv_rew_plex_10_sec:
+  alias: Plex Rewind 10 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - play         

@@ -12,18 +12,10 @@ transition = data.get('transition')
 transition_secs = (int(transition[:2])*3600 + int(transition[3:5])*60
                    + int(transition[-2:]))    # convert string to total secs'
 
-# The method for assigning the step_pct and sleep_delay values varies
-# as the value for transition_secs varies. We don't want to call the
-# service to change brightness more than once every second.
-if transition_secs >= abs((end_level_pct - start_level_pct)):
-    # This is a case where we change brightness 1% every 'sleep_delay' seconds
-    step_pct  = 1
-    sleep_delay = abs(transition_secs/(end_level_pct - start_level_pct))
-else:
-    # In this case we change 'step_pct' % every 1 seconds
-    step_pct = abs(((end_level_pct - start_level_pct)/
-               transition_secs))
-    sleep_delay = 1
+
+# We change brightness 1% every 'sleep_delay' seconds
+step_pct  = 1
+sleep_delay = abs(transition_secs/(end_level_pct - start_level_pct))
 
 # If fading out the step_pct will be negative (decrement each iteration)
 if end_level_pct < start_level_pct: step_pct = step_pct * -1

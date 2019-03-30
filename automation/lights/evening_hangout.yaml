@@ -3,7 +3,7 @@ alias: Family Room Evening Hangout
 initial_state: 'on'
 trigger:
 - event: sunset
-  offset: 01:00:00
+  offset: 00:20:00
   platform: sun
 condition:
 - condition: state

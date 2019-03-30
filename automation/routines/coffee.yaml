@@ -5,38 +5,14 @@ trigger:
 - platform: webhook
   webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482WK1
 action:
+# Turn on Coffee pot
+- service: switch.turn_on
+  entity_id: switch.coffee_wemo
+# Turn off Wyze cam notifications for next 45 minutes
+# until I am done snoozing.  
 - data:
-    entity_id: switch.coffee_wemo
-  service: switch.turn_on
-- delay: >
-      {%- if trigger is not defined -%}
-        00:00
-      {%- elif trigger.data.delay == 'delay' -%}
-        00:30
-      {%- elif trigger.data.delay == 'no_delay' -%}        
-        00:00
-      {%- else -%}
-        00:00
-      {%- endif -%}   
-- service: script.morning_lights
-- delay: >
-      {%- if trigger is not defined -%}
-        02:30
-      {%- elif trigger.data.delay == 'delay' -%}
-        02:00
-      {%- elif trigger.data.delay == 'no_delay' -%}        
-        02:30        
-      {%- else -%}
-        02:30
-      {%- endif -%}  
-- data:
-    entity_id: switch.coffee_wemo
-  service: switch.turn_off  
-  
-# URL encoded data is passed with webhook.
-# If "delay", then don't call morning_lights script for 30 minutes.
-# Otherwise, call it right away.  The morning_lights script has a 
-# condition to run only if before sunrise.   The delay for the 
-# turning off of the coffee pot also has a check for delay.  It will
-# wait only another 2:00 if the lights were delayed. Else, 2:30.  
+    entity_id: input_number.wyze_notification
+    value: 45
+  service: input_number.set_value  
+   
 

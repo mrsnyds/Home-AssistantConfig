@@ -1,0 +1,29 @@
+id: sunset
+alias: Sunset Routine
+trigger:   
+  platform: numeric_state
+  entity_id: sun.sun
+  value_template: "{{ state.attributes.elevation }}"
+  # Can be a positive or negative number
+  below: -4.0
+  above: -6.0
+condition:
+  condition: time
+  # Can only fire in the evening
+  after: '12:00:00' 
+  before: '23:59:00'  
+action:
+- service: light.turn_on
+  entity_id: light.exterior_front_door
+  data:
+    brightness_pct: 55
+- service: light.turn_on
+  entity_id: light.patio_back_door
+  data:
+    brightness_pct: 35 
+- data:
+    entity_id: switch.dining_room_tree
+  service: switch.turn_on   
+# Turn Wyze Cam notifications off after dark  
+- service: ifttt.trigger
+  data: {"event":"notify_off", "value1":"Hello World!"}   

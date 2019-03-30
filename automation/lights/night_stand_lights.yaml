@@ -1,8 +1,12 @@
 id: night stand lights
 alias: Night Stand Lights
 trigger: 
+- platform: state 
   entity_id: light.master_bedroom_night_stand
-  platform: state  
+  to: 'on'
+- platform: state 
+  entity_id: light.master_bedroom_night_stand
+  to: 'off'
 action:
 - data:
     entity_id: switch.kitchen_tree
@@ -12,4 +16,9 @@ action:
     {% else %}
       switch.turn_{{states("light.master_bedroom_night_stand")}}
     {% endif %}
+    
+# Added "for" one second to potentially address issue with 
+# light.master_bedroom_night_stand flashing with brightness changes. The 
+# theory is that triggering a service many times in a short period was
+# perhaps causing the behavior.
     

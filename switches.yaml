@@ -1,7 +1,7 @@
-- platform: tplink
-  host: 192.168.1.156
-- platform: tplink
-  host: 192.168.1.128     
+# - platform: tplink
+  # host: 192.168.1.156
+# - platform: tplink
+  # host: 192.168.1.128     
 - platform: template
   switches:    
     # NEXX Garage switch
@@ -43,6 +43,9 @@
         state_attr('media_player.denon_main', 'source') == 'Sony TV')}}
       friendly_name: Sony TV
       turn_on:
+      - service: media_player.turn_on
+        data: 
+          entity_id: media_player.denon_main
       - service: remote.send_command
         data:
           entity_id: remote.family_room
@@ -51,11 +54,8 @@
       - service: remote.send_command
         data:
           entity_id: remote.family_room
-          command: home           
-      - service: media_player.turn_on
-        data: 
-          entity_id: media_player.denon_main              
-      turn_off:
+          command: home                        
+      turn_off:                    
       - service: remote.send_command
         data:
           entity_id: remote.family_room
@@ -65,9 +65,10 @@
         data:
           entity_id: remote.family_room
           command: power    
+      - delay: "00:00:05"
       - service: media_player.turn_off
         data: 
-          entity_id: media_player.denon_main         
+          entity_id: media_player.denon_main            
       icon_template: mdi:television     
     # SONY TV PRIME
     sony_prime:
@@ -83,7 +84,7 @@
           {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -115,7 +116,7 @@
           {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -145,7 +146,7 @@
           {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -176,7 +177,7 @@
           {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -207,7 +208,7 @@
           {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -239,7 +240,7 @@
           {%- if state_attr('media_player.family_room', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -279,7 +280,7 @@
           {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -318,7 +319,7 @@
           {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -355,7 +356,7 @@
           {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -393,7 +394,7 @@
           {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -431,7 +432,7 @@
           {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:
@@ -470,7 +471,7 @@
           {%- if state_attr('media_player.roku_player', 'source') == 'Sling TV' -%}
             00:00:05
           {%- else -%}
-            00:00:02
+            00:00:03
           {%- endif -%}        
       - service: remote.send_command
         data:

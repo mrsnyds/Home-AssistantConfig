@@ -6,5 +6,5 @@ coffee_lights:
       entity_id: switch.coffee_wemo
   - service: automation.trigger
     data:
-      entity_id: automation.coffee_brewing
+      entity_id: automation.morning_lights_and_coffee
 ## A script to call from Garmin IQ ... added to group "Garmin IQ Entities"

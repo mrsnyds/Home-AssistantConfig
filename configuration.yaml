@@ -22,6 +22,14 @@ http:
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+# Panel for Floor Plan https://github.com/pkozul/ha-floorplan
+panel_custom:
+  - name: floorplan
+    sidebar_title: Floorplan
+    sidebar_icon: mdi:home
+    url_path: floorplan
+    config: !include floorplan.yaml
+
 # Lovelace Card Custom Updater
 custom_updater:
 
@@ -48,24 +56,36 @@ notify: !include notifiers.yaml
 input_boolean:
   guest_mode:
     name: Guest Mode On
-    initial: 
     icon: mdi:account-switch
   test_toggle:
     name: Test Toggle
-    initial: 
-    icon: mdi:test-tube
-input_select:
+    icon: mdi:test-tube 
+
+input_number:
+  garage_closed:
+    name: Garage Closed Repetition
+    min: -5
+    max: 5
+    step: 1         
   wyze_notification:
-    name: Wyze Notify
-    options:
-      - choose one
-      - Frank OFF
-      - Frank ON
-      - Kathy OFF
-      - Kathy ON
-    initial: choose one
+    name: Pause Wyze Notification - Frank
+    min: 0
+    max: 240
+    step: 15  
+    unit_of_measurement: minutes
     icon: mdi:camera  
-      
+    
+# Timers    
+timer:
+  heater_off:
+    duration: '01:30:00' 
+  coffee_off:
+    duration: '02:30:00'       
+  wyze_pause_frank:
+    duration: '01:00:00'  
+  wyze_pause_kathy:
+    duration: '01:00:00'     
+    
 # Sensors
 sensor:
   # Weather prediction
@@ -91,28 +111,29 @@ sensor:
     api_key: !secret darksky_key
     forecast:
       - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7      
     monitored_conditions:
       - summary
       - icon
-      - temperature  
+      - temperature 
+      - apparent_temperature
+      - humidity
       - precip_probability
       - precip_accumulation
       - wind_speed
+      - cloud_cover
     
 # Text to speech
 tts:
   - platform: google
  
-timer:
-  heater_off:
-    duration: '01:30:00'   
-    
-input_number:
-  garage_closed:
-    name: Garage Closed Repetition
-    min: -5
-    max: 5
-    step: 1         
+      
       
 ## GOOGLE ===================     
 ## Google Calendar
@@ -156,8 +177,6 @@ weather:
   - platform: darksky
     api_key: !secret darksky_key
     units: us
-    latitude: !secret my_latitude
-    longitude: !secret my_longitude
     mode: daily  
     
 # Python

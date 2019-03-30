@@ -1,0 +1,221 @@
+tv_fwd_netflix_5_min:
+  alias: Netflix Forward 5 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right  
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right         
+        - play           
+tv_rew_netflix_5_min:
+  alias: netflix Rewind 5 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left  
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left          
+        - play 
+
+tv_fwd_netflix_3_min:
+  alias: netflix Forward 3 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right  
+        - play           
+tv_rew_netflix_3_min:
+  alias: netflix Rewind 3 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left  
+        - play 
+
+tv_fwd_netflix_1_min:
+  alias: netflix Forward 1 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - right
+        - right
+        - right
+        - right
+        - play           
+tv_rew_netflix_1_min:
+  alias: netflix Rewind 1 Min
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - left
+        - left
+        - left
+        - left
+        - play         
+        
+tv_fwd_netflix_30_sec:
+  alias: netflix Forward 30 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - right 
+        - play         
+tv_rew_netflix_30_sec:
+  alias: netflix Rewind 30 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - left 
+        - play          
+        
+tv_fwd_netflix_20_sec:
+  alias: netflix Forward 20 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - right
+        - play         
+tv_rew_netflix_20_sec:
+  alias: netflix Rewind 20 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - left
+        - play         
+        
+tv_fwd_netflix_10_sec:
+  alias: netflix Forward 10 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - right
+        - play         
+tv_rew_netflix_10_sec:
+  alias: netflix Rewind 10 Sec
+  sequence:       
+  - service: remote.send_command
+    data:
+      entity_id: remote.family_room
+      command:
+        - left
+        - play         

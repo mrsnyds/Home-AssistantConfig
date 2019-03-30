@@ -1,0 +1,11 @@
+id: coffee_switch_timer
+alias: Coffee Switch Timer
+trigger:
+  platform: state  
+  entity_id: switch.coffee_wemo
+  from: 'off'
+  to: 'on'
+action:
+- data:
+    entity_id: timer.coffee_off
+  service: timer.start
