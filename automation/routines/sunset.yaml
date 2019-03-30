@@ -16,7 +16,7 @@ action:
 - service: light.turn_on
   entity_id: light.exterior_front_door
   data:
-    brightness_pct: 55
+    brightness_pct: 100
 - service: light.turn_on
   entity_id: light.patio_back_door
   data:
@@ -26,4 +26,9 @@ action:
   service: switch.turn_on   
 # Turn Wyze Cam notifications off after dark  
 - service: ifttt.trigger
-  data: {"event":"notify_off", "value1":"Hello World!"}   
+  data: {"event":"notify_off", "value1":"Hello World!"}  
+- delay: '04:30:00'  
+- service: light.turn_on
+  entity_id: light.exterior_front_door
+  data:
+    brightness_pct: 45
