@@ -38,4 +38,4 @@ aws_long:
     service: scene.turn_on   
   - data:
       entity_id: light.dining_room_tree
-    service: light.turn_off      
+    service: light.turn_off    

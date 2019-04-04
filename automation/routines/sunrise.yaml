@@ -18,9 +18,9 @@ action:
 # Turn Wyze Cam notifications back on
 - service: ifttt.trigger
   data: {"event":"notify_on", "value1":"Hello World!"} 
-# Set boolean to indicate Sunrise Routine was triggered.
-# It will later be reset to off in "Reset Sunrise Boolean Triggered" automation 
-- service: input_boolean.turn_on
-  entity_id: input_boolean.sunrise_triggered
-
-    
+# send solar angle to google sheet
+- service: ifttt.trigger
+  data_template: {"event":"solar_angle", 
+    "value1": '{{state_attr("sun.sun", "elevation")}}', 
+    "value2": '{{ (as_timestamp(states.sun.sun.attributes.next_rising) - as_timestamp(now()))/60 }}',
+    "value3": '{{as_timestamp(now())|timestamp_custom("%I:%M:%S %p")}}'}  

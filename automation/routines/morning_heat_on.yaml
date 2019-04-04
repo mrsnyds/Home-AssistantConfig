@@ -1,5 +1,6 @@
 id: morning_heat_on
 alias: Morning Heat On
+initial_state: 'on'
 # Turn on the heater that is plugged into this switch.  The state change of the switch 
 # will trigger a second action in the automation "Heater Switch Timer", to start a timer which
 # when finished, will turn the switch back off (currently "01:30:00" duration).
@@ -18,7 +19,10 @@ condition:
         - fri  
     - condition: state
       entity_id: group.home
-      state: home  
+      state: home
+    - condition: state
+      entity_id: 'input_boolean.test_toggle'
+      state: 'on'
 action:
 - data:
     entity_id: switch.merry_and_bright, switch.family_room_ceiling_fan

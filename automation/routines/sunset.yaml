@@ -26,7 +26,13 @@ action:
   service: switch.turn_on   
 # Turn Wyze Cam notifications off after dark  
 - service: ifttt.trigger
-  data: {"event":"notify_off", "value1":"Hello World!"}  
+  data: {"event":"notify_off", "value1":"Hello World!"}
+# send solar angle to google sheet
+- service: ifttt.trigger
+  data_template: {"event":"solar_angle", 
+    "value1": '{{state_attr("sun.sun", "elevation")}}', 
+    "value2": '{{ (as_timestamp(now())- as_timestamp(states.sun.sun.last_changed))/60 }} ',
+    "value3": '{{as_timestamp(now())|timestamp_custom("%I:%M:%S %p")}}'}    
 - delay: '04:30:00'  
 - service: light.turn_on
   entity_id: light.exterior_front_door
