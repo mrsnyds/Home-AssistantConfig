@@ -11,12 +11,7 @@
   default_conversations:
     - id: Ugz_DG8s_6WoV637g1l4AaABAagBxZzMDw
     - id: Ugzo_ICgyVEfNSDse9l4AaABAagBnrGgBA
-    - id: Ugw7aWMpGN9ki28Q_ON4AaABAagBsIriAw
-- platform: aws_lambda
-  name: aws_lambda_1
-  aws_access_key_id: !secret aws_key_id
-  aws_secret_access_key: !secret aws_secret_key
-  region_name: 'us-west-2'    
+    - id: Ugw7aWMpGN9ki28Q_ON4AaABAagBsIriAw   
 - platform: webostv
   host: 192.168.1.125
   name: lg_tv

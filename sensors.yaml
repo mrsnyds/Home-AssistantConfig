@@ -1,0 +1,50 @@
+# Weather prediction
+- platform: yr 
+# Time/Date Sensors
+- platform: time_date
+  display_options:
+    - 'time'
+    - 'date'
+    - 'date_time'
+    - 'date_time_iso'
+    - 'time_date'
+    - 'time_utc'
+    - 'beat'
+#WAZE
+- platform: waze_travel_time
+  origin: device_tracker.google_maps_109448847750537552828
+  destination: zone.work
+  region: 'US'
+  name: ETA NJM
+- platform: waze_travel_time
+  origin: device_tracker.google_maps_109448847750537552828
+  destination: zone.home
+  region: 'US'
+  name: Frank ETA Home
+- platform: waze_travel_time
+  origin: device_tracker.google_maps_115006492650333848573
+  destination: zone.home
+  region: 'US'
+  name: Kathy ETA Home  
+#Dark Sky
+- platform: darksky
+  api_key: !secret darksky_key
+  forecast:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7      
+  monitored_conditions:
+    - summary
+    - icon
+    - temperature 
+    - apparent_temperature
+    - humidity
+    - precip_probability
+    - precip_accumulation
+    - wind_speed
+    - cloud_cover

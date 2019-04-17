@@ -42,8 +42,8 @@ light.front_foyer_foyer_star:
 light.exterior_front_door:
   friendly_name: Front Door
 switch.merry_and_bright:
-  friendly_name: Heater
-  icon: mdi:thermometer-lines
+  friendly_name: Dehumidifer
+  icon: mdi:water
 switch.coffee_wemo:
   icon: mdi:coffee
 switch.dining_room_tree:
@@ -66,3 +66,4 @@ script.commercial_skip:
 input_boolean.test_toggle:
   friendly_name: Morning Heat On
   icon: mdi:thermometer-lines
+media_player.basement_roku_2: {}

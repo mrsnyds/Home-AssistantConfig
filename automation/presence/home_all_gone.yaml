@@ -18,9 +18,9 @@ condition:
   value_template: '{{ is_state("group.not_home_on", "on") }}'
 action:
   service_template: >
-    {%- if now().hour | int in range(0,18)
-        or now().hour | int == 23 -%} 
+    {%- if (now().day == (as_timestamp(states.sun.sun.attributes.next_setting)|timestamp_custom("%d")|int))
+        or (now().hour | int == 23) -%} 
       script.all_gone_not_random
-    {%- elif is_state("group.not_home_random", "on")  -%}
+    {%- else -%}
       script.all_gone_random
     {%- endif -%}

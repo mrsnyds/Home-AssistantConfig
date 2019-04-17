@@ -21,7 +21,7 @@ condition:
       entity_id: group.home
       state: home
     - condition: state
-      entity_id: 'input_boolean.test_toggle'
+      entity_id: 'input_boolean.morning_heat'
       state: 'on'
 action:
 - data:

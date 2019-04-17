@@ -25,6 +25,13 @@ action:
       01:00:00
     {% endif %}
 
+# Track % Cloud Cover and time lights come on in Google Sheet    
+- service: ifttt.trigger
+  data_template: {"event":"sunset_cloud_cover", 
+    "value1": '{{states.sensor.dark_sky_cloud_coverage.state | int}}', 
+    "value2": '{{as_timestamp(now())|timestamp_custom("%I:%M:%S %p")}}',
+    "value3": '{{ ((as_timestamp(states.sun.sun.attributes.next_setting) - as_timestamp(now()))/60 ) | int }}'}      
+    
 # Trigger an automation to bring them both up to 30% in 5 min.
 - event: start_fam_room_sunset
   event_data:

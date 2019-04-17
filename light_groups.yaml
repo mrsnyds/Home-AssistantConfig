@@ -20,6 +20,7 @@
     name: Upstairs Lights
     entities:
       - light.master_bedroom_night_stand
+      - light.kitchen_tree
       - light.master_bathroom_shower_lights   
       - light.master_bathroom_vanity_lights   
       - light.upstairs_hallway_upstairs_hallway

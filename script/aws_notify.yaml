@@ -1,7 +1,7 @@
 # "All Gone" scripts fire when nobody is home but select devices are on.
 # In the time frame between 18:00 - 23:00 when random lights are on, 
 # the SMS is only sent if some device other than random lights are on.
-# So the automation that calls these scipts selects "All Gone Not Random",
+# So the automation that calls these scripts selects "All Gone Not Random",
 # or "All Gone Random", based on the time of day, and then a condition
 # the "Random" script suppresses a message if only random lights are on.
 all_gone_not_random:

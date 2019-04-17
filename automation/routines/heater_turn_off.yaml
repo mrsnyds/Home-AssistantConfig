@@ -6,6 +6,10 @@ trigger:
   event_type: timer.finished
   event_data:
     entity_id: timer.heater_off
+condition:
+  - condition: state
+    entity_id: 'input_boolean.morning_heat'
+    state: 'on'    
 action:
 - data:
     entity_id: switch.merry_and_bright, switch.family_room_ceiling_fan

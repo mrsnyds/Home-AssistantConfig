@@ -1,0 +1,40 @@
+id: dehumidifier_on_off
+alias: Dehumidifer On and Off
+initial_state: 'on'
+# Turn on the dehumidifiers plugged into this switch.  
+# There is a time_only datetime input for the "ON" and also
+# one for "OFF".  Checks every 6 mins., and fires if within +/- 3 minutes
+# of the ON and OFF values set in the front end.
+trigger:
+- platform: time_pattern
+  minutes: '/6'  
+condition:
+  condition: and
+  conditions:
+    - condition: state
+      entity_id: 'input_boolean.evening_dehumidifier'
+      state: 'on'      
+    - condition: or
+      conditions:
+        - condition: template
+          value_template: "{{(now().hour == states.input_datetime.hum_on.attributes.hour) and
+            (now().minute >= states.input_datetime.hum_on.attributes.minute - 3) and
+            (now().minute <= states.input_datetime.hum_on.attributes.minute + 3)}}"
+        - condition: template
+          value_template: "{{(now().hour == states.input_datetime.hum_off.attributes.hour) and
+            (now().minute >= states.input_datetime.hum_off.attributes.minute - 3) and
+            (now().minute <= states.input_datetime.hum_off.attributes.minute + 3)}}"    
+action:
+- data:
+    entity_id: switch.merry_and_bright
+  service_template: >
+    {%- if (now().hour == states.input_datetime.hum_on.attributes.hour) and
+        (now().minute >= states.input_datetime.hum_on.attributes.minute - 3) and
+        (now().minute <= states.input_datetime.hum_on.attributes.minute + 3) -%} 
+      switch.turn_on
+    {%- elif (now().hour == states.input_datetime.hum_off.attributes.hour) and
+        (now().minute >= states.input_datetime.hum_off.attributes.minute - 3) and
+        (now().minute <= states.input_datetime.hum_off.attributes.minute + 3) -%} 
+      switch.turn_off
+    {%- endif -%}
+

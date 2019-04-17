@@ -1,0 +1,28 @@
+id: dehumidifier_schedule_update
+alias: Dehumidifer Schedule Update
+initial_state: 'on'
+# This automation validates that the difference between the "on" and "off"
+# schedule is at least 10 minutes, and will push the "off" time out if necessary.   
+# The check interval for turning the switch on or off is 6 minutes, but 10 minutes is a nice, round minimum.
+trigger:
+- platform: state
+  entity_id: input_datetime.hum_on
+- platform: state
+  entity_id: input_datetime.hum_off
+action: 
+- delay: '00:00:02'
+- service: input_datetime.set_datetime
+  entity_id: input_datetime.hum_off
+  data_template:
+    time: >
+      {% set on_time = "%s %s"|format(as_timestamp(now()) 
+      | timestamp_custom('%Y-%m-%d'),states.input_datetime.hum_on.state) %}
+      {% set off_time = "%s %s"|format(as_timestamp(now()) 
+      | timestamp_custom('%Y-%m-%d'),states.input_datetime.hum_off.state) %}    
+      {% set adjustment = ((((as_timestamp(strptime(off_time, "%Y-%m-%d")) -  
+        as_timestamp(strptime(on_time, "%Y-%m-%d")))/60)|int) - 10) %} 
+      {%- if (adjustment < -10) or (adjustment > -1) -%}
+        {{states.input_datetime.hum_off.state}}
+      {%- else -%}
+        {{(as_timestamp(strptime(off_time, "%Y-%m-%d"))+((adjustment))*-60)| timestamp_custom('%H:%M:%S')}}
+      {%- endif -%} 

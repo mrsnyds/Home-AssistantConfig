@@ -1,5 +1,6 @@
 id: wyze_pause_timer
 alias: Wyze Pause Notification Timer
+initial_state: 'on'
 trigger:
   platform: state  
   entity_id: input_number.wyze_notification

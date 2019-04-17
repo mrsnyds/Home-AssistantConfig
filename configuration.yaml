@@ -22,6 +22,18 @@ http:
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+# Components with !include
+automation: !include_dir_list automation
+script: !include_dir_merge_named script
+group: !include groups.yaml
+zone: !include zones.yaml
+device_tracker: !include device_tracker.yaml
+light: !include light_groups.yaml
+switch: !include switches.yaml
+sensor: !include sensors.yaml
+binary_sensor: !include binary_sensors.yaml
+notify: !include notifiers.yaml   
+
 # Panel for Floor Plan https://github.com/pkozul/ha-floorplan
 panel_custom:
   - name: floorplan
@@ -41,25 +53,21 @@ discovery:
 # http:
 #   base_url: example.duckdns.org:8123
 
-group: !include groups.yaml
-automation: !include_dir_list automation
-script: !include_dir_merge_named script
-zone: !include zones.yaml
-device_tracker: !include device_tracker.yaml
-light: !include light_groups.yaml
-switch: !include switches.yaml
-binary_sensor: !include binary_sensors.yaml
+# Wake on LAN 
 wake_on_lan:
-notify: !include notifiers.yaml   
 
 # Inputs
 input_boolean:
   guest_mode:
     name: Guest Mode On
     icon: mdi:account-switch
-  test_toggle:
-    name: Test Toggle
-    icon: mdi:test-tube 
+  morning_heat:
+    name: Morning Heat On
+    icon: mdi:thermometer-lines
+  evening_dehumidifier:
+    name: Activate Dehumidifier
+    icon: mdi:water   
+  
 
 input_number:
   garage_closed:
@@ -75,6 +83,17 @@ input_number:
     unit_of_measurement: minutes
     icon: mdi:camera  
     
+input_datetime:
+  hum_off:
+    name: Humidifier Time Off
+    has_date: false
+    has_time: true
+  hum_on:
+    name: Humidifier Time On
+    has_date: false
+    has_time: true
+    
+    
 # Timers    
 timer:
   heater_off:
@@ -87,53 +106,25 @@ timer:
     duration: '01:00:00'     
     
 # Sensors
-sensor:
-  # Weather prediction
-  - platform: yr 
-  #WAZE
-  - platform: waze_travel_time
-    origin: device_tracker.google_maps_109448847750537552828
-    destination: zone.work
-    region: 'US'
-    name: ETA NJM
-  - platform: waze_travel_time
-    origin: device_tracker.google_maps_109448847750537552828
-    destination: zone.home
-    region: 'US'
-    name: Frank ETA Home
-  - platform: waze_travel_time
-    origin: device_tracker.google_maps_115006492650333848573
-    destination: zone.home
-    region: 'US'
-    name: Kathy ETA Home  
-  #Dark Sky
-  - platform: darksky
-    api_key: !secret darksky_key
-    forecast:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7      
-    monitored_conditions:
-      - summary
-      - icon
-      - temperature 
-      - apparent_temperature
-      - humidity
-      - precip_probability
-      - precip_accumulation
-      - wind_speed
-      - cloud_cover
+
     
 # Text to speech
 tts:
   - platform: google
  
-      
+## Amazon AWS Components
+aws:
+  credentials:
+    - name: my_aws_account
+      aws_access_key_id: !secret aws_key_id
+      aws_secret_access_key: !secret aws_secret_key
+  notify:
+    # use the first credential defined in aws component by default
+    - name: aws_lambda_1
+      aws_access_key_id: !secret aws_key_id
+      aws_secret_access_key: !secret aws_secret_key
+      service: lambda
+      region_name: us-west-2
       
 ## GOOGLE ===================     
 ## Google Calendar
