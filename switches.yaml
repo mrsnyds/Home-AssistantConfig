@@ -37,14 +37,18 @@
       value_template: "{{ is_state('binary_sensor.my_pc_ping', 'on') }}"
       friendly_name: My PC
       turn_on:
-        service: wake_on_lan.send_magic_packet
+      - service: wake_on_lan.send_magic_packet
         data:
-          mac: "F8-BC-12-A3-96-27"           
+          mac: "F8-BC-12-A3-96-27"   
+      - service: light.turn_on
+        entity_id: light.frank_desk_lamp      
       turn_off:
-        service: notify.pushbullet 
+      - service: notify.pushbullet 
         data: 
           message: Sleep
-          title: PushBullet.Note.Sleep                        
+          title: PushBullet.Note.Sleep
+      - service: light.turn_off
+        entity_id: light.frank_desk_lamp          
       icon_template: mdi:desktop-tower-monitor      
     # SONY TV switch
     sony_tv:

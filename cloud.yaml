@@ -10,8 +10,9 @@ google_actions:
       - scene
       - fan
       - media_player
-    # exclude_entities:
-      # - switch.outside
+    exclude_entities:
+      - switch.desk_wemo
+      - switch.dining_room_tree
   entity_config:
     light.dining_room_tree:
       name: Dining Room Tree Switch

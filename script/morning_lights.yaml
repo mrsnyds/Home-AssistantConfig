@@ -1,8 +1,14 @@
 morning_lights:
   alias: Morning Wakeup Lights
-  sequence:     
-  - condition: sun
-    before: sunrise 
+  sequence:  
+  - condition: or  
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-01:30:00" 
+      - condition: sun
+        before: sunrise
+        before_offset: "01:30:00" 
   - service: automation.turn_off
     entity_id: automation.living_room_motion_lights
   - service: python_script.light_fader
