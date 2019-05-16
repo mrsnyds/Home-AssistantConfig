@@ -2,20 +2,32 @@
   # host: 192.168.1.156
 # - platform: tplink
   # host: 192.168.1.128     
+- platform: command_line
+  switches:   
+    aeotec_zstick_disco_light: 
+      friendly_name: 'Aeotec Z-Stick Disco Light' 
+      command_on: 'echo -e -n "\x01\x08\x00\xF2\x51\x01\x01\x05\x01\x50" > /dev/serial/by-id/usb-0658_0200-if00'  
+      command_off: 'echo -e -n "\x01\x08\x00\xF2\x51\x01\x00\x05\x01\x51" > /dev/serial/by-id/usb-0658_0200-if00'  
 - platform: template
   switches:    
     # NEXX Garage switch
     garage_door:
-      value_template: "{{ is_state('binary_sensor.garage_door', 'on') }}"
+      value_template: "{{ is_state('binary_sensor.wyze_contact_2', 'on') }}"
       friendly_name: Garage Door
       turn_on:
-        service: ifttt.trigger
+      - service: ifttt.trigger
         data: {"event":"Nexx_Open", "value1":"Hello World!"}
+      - event: garage_icon
+        event_data:
+          icon: opening
       turn_off:
-        service: ifttt.trigger
-        data: {"event":"close_Nexx", "value1":"Hello World!"}  
+      - service: ifttt.trigger
+        data: {"event":"close_Nexx", "value1":"Hello World!"}
+      - event: garage_icon
+        event_data:
+          icon: closing        
       icon_template: >-
-        {% if is_state('binary_sensor.garage_door', 'on') %}
+        {% if is_state('binary_sensor.wyze_contact_2', 'on') %}
           mdi:garage-open
         {% else %}
           mdi:garage
@@ -69,7 +81,15 @@
       - service: media_player.turn_off
         data: 
           entity_id: media_player.denon_main            
-      icon_template: mdi:television     
+      icon_template: >-
+        {% if (is_state('media_player.denon_main', 'on') and 
+        state_attr('media_player.denon_main', 'source') == 'Roku') 
+        or (is_state('media_player.denon_main', 'on') and 
+        state_attr('media_player.denon_main', 'source') == 'Sony TV') %}
+          mdi:television
+        {% else %}
+          mdi:television-off
+        {% endif %}      
     # SONY TV PRIME
     sony_prime:
       value_template: "{{ state_attr('media_player.family_room', 'source') == 'Prime Video' }}"
@@ -258,7 +278,27 @@
           command: 
             - home
         service: remote.send_command        
-      icon_template: mdi:television     
+      icon_template: mdi:television    
+      
+    #LG BASEMENT TV
+    lg_basement_tv:
+      value_template: "{{is_state('media_player.lg_tv', 'playing')}}"
+      friendly_name: LG Basement TV
+      turn_on:
+      - service: media_player.turn_on
+        data: 
+          entity_id: media_player.lg_tv                      
+      turn_off:                    
+      - service: media_player.turn_off
+        data: 
+          entity_id: media_player.lg_tv            
+      icon_template: >-
+        {% if is_state('media_player.lg_tv', 'playing') %}
+          mdi:television
+        {% else %}
+          mdi:television-off
+        {% endif %}
+      
     # Basement TV PRIME
     basement_prime:
       value_template: "{{ state_attr('media_player.roku_player', 'source') == 'Prime Video' }}"

@@ -7,11 +7,11 @@ trigger:
 action:
 # Turn on Coffee pot
 - service: switch.turn_on
-  entity_id: switch.coffee_wemo
+  entity_id: switch.aeon_coffee
 # Turn off Wyze cam notifications for next 45 minutes
 # until I am done snoozing.  
 - data:
-    entity_id: input_number.wyze_notification
+    entity_id: input_number.wyze_notification_frank
     value: 45
   service: input_number.set_value  
    

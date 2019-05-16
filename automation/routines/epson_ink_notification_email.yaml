@@ -1,0 +1,66 @@
+# When one of the EPSON 'sensor.inklevel ...' drops belows 20%, use AWS lambda to send a notification email.
+# An additional trigger is once a day at 08:00:00; if a reminder sensor is "on", a reminder is sent.
+#
+# Either email can be overidden by the "sensor.<color>_ink_reminder_email" sensor being "off":
+#     - the state change email is blocked the corresponding "sensor.<color>_ink_reminder_email" set to "off"
+#     - the daily email is blocked ONLY if ALL "sensor.<color>_ink_reminder_email" sensors are "off" 
+#
+#   The sensors are turned on if ink level < 20%  AND  the input_boolean.<color>_ink_reminder == "ON"
+#   The sensor will stay "off", even if ink < 20%, if corresponding input_boolean.<color>_ink_reminder is set to "OFF"
+#
+# If input_boolean.<color>_ink_reminder is set to "OFF", that ensures the "sensor.<color>_ink_reminder_email" 
+# will be "off", even if ink < 20%.  This is useful when you already have a backup, and want suppress reminders 
+# until you are down to your last cartridge.  
+#
+# A separate automation will reset the input_boolean.<color>_ink_reminder to "ON" when the level goes above 19%.
+
+id: epson_ink_email
+alias: Epson Ink Notification Email
+initial_state: 'on'
+
+trigger:
+- platform: numeric_state
+  entity_id: sensor.inklevel_black
+  below: 20
+- platform: numeric_state
+  entity_id: sensor.inklevel_yellow
+  below: 20 
+- platform: numeric_state
+  entity_id: sensor.inklevel_magenta
+  below: 20
+- platform: numeric_state
+  entity_id: sensor.inklevel_cyan
+  below: 20   
+- platform: time
+  at: '08:00:00'  
+  
+condition:
+  condition: template
+  value_template: >
+    {%- if trigger.platform == 'time' -%}
+      {{'on' in [(states("sensor.black_ink_reminder_email")),
+      (states("sensor.yellow_ink_reminder_email")),
+      (states("sensor.magenta_ink_reminder_email")),
+      (states("sensor.cyan_ink_reminder_email"))]}}
+    {%- else -%}
+      {% set my_trigger = (trigger.entity_id|replace('sensor.inklevel_', '')) %}
+      {% set my_condition = ("sensor." + my_trigger + "_ink_reminder_email") %}
+      {{states(my_condition) == 'on'}}
+    {%- endif -%}    
+action:
+- data_template: 
+    target: "arn:aws:lambda:us-west-2:152624716237:function:mySendEmail"  
+    data:            
+      black_level: "{{states('sensor.inklevel_black')|default('0',true)}}"
+      yellow_level: "{{states('sensor.inklevel_yellow')|default('0',true)}}"
+      magenta_level: "{{states('sensor.inklevel_magenta')|default('0',true)}}"
+      cyan_level: "{{states('sensor.inklevel_cyan')|default('0',true)}}"    
+      sensor_trigger: >
+        {%- if trigger.platform == 'numeric_state' -%}
+          {{trigger.entity_id|default('not sure which?',true)}}
+        {%- else -%}
+          'time'
+        {%- endif -%}
+    title: "haha"
+    message: "send an email notification"
+  service: notify.aws_lambda_1

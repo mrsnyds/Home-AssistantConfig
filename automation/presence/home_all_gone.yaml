@@ -1,9 +1,6 @@
 id: all_gone_stuff_on
 alias: Home - All Gone Stuff On
-# If after 15 minutes of nobody home there are any items 
-# left on in the group.not_home_on, send an SMS alert.  
-# The template selects which script to run based on whether
-# or not it is during the random away lights time frame
+# When nobody is home for 15 minutes, fire various scripts.
 initial_state: 'on'
 trigger:
 - entity_id: group.home
@@ -13,14 +10,16 @@ trigger:
     hours: 0
     minutes: 15
     seconds: 0
-condition:
-  condition: template
-  value_template: '{{ is_state("group.not_home_on", "on") }}'
 action:
-  service_template: >
+# Send notification SMS text if things are left turned on
+- service_template: >
     {%- if (now().day == (as_timestamp(states.sun.sun.attributes.next_setting)|timestamp_custom("%d")|int))
         or (now().hour | int == 23) -%} 
       script.all_gone_not_random
     {%- else -%}
       script.all_gone_random
     {%- endif -%}
+# If nobody is home, run the dehumidifier until they return.
+# Conditions in the script will verify the dehumidifier switch is active.
+# The dehumidifier schedule will control on/off if gone for more than a day.
+- service: script.dehumidify_while_gone

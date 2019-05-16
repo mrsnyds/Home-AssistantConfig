@@ -1,0 +1,32 @@
+id: garage_open_reminder
+alias: Garage Open Reminders
+initial_state: 'on'
+
+# When garage door sensor is open for 15 minutes (will make this configurable!)
+# run a scipt that sends a reminder SMS, waits 15 minutes, and then triggers
+# this automation again ... if conditions are met, then this will repeat until
+# the condition of garage door sensor being "off" is met.
+
+trigger:
+- platform: event
+  event_type: garage_open
+- platform: state
+  entity_id: sensor.garage_open_threshold_exceeded
+  to: 'on' 
+  
+condition:
+- condition: state
+  entity_id: binary_sensor.wyze_contact_2
+  state: 'on'
+- condition: state
+  entity_id: input_boolean.garage_reminder_on
+  state: 'on'
+- condition: state
+  entity_id: script.send_garage_reminder
+  state: 'off' 
+  
+action:
+  service: script.send_garage_reminder
+  
+  
+# input_number.garage_notification_interval{{((as_timestamp((now()))- (as_timestamp(states.binary_sensor.wyze_contact_2.last_changed)))/60)|int > 15}}  

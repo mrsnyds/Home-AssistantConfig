@@ -1,3 +1,69 @@
+#Template Sensors
+- platform: template
+  sensors:
+    solar_angle:
+      friendly_name: "Sun Angle"
+      unit_of_measurement: '°'
+      value_template: "{{ '%+.1f'|format(state_attr('sun.sun', 'elevation')) }}"
+    garage_open_threshold_exceeded:
+      friendly_name: "Garage Open Threshold Exceeded"
+      entity_id: sensor.time
+      value_template: > 
+        {%- if (((as_timestamp((now()))- (as_timestamp(states.binary_sensor.wyze_contact_2.last_changed)))/60)
+            |float > (states.input_number.garage_notification_interval.state| float)) 
+            and (states.binary_sensor.wyze_contact_2.state == 'on') -%}
+          on
+        {%- else -%}
+          off
+        {%- endif -%}  
+   # EPSON Ink Level Sensors 
+    very_low_ink:
+      friendly_name: "Low Ink Under 5"
+      value_template: > 
+        {%- if [states.sensor.inklevel_black.state|int,
+                states.sensor.inklevel_yellow.state|int,
+                states.sensor.inklevel_magenta.state|int,
+                states.sensor.inklevel_cyan.state|int] | min < 5 -%}
+          on
+        {%- else -%}
+          off
+        {%- endif -%}
+    black_ink_reminder_email:
+      friendly_name: "Send Black Ink Reminder"
+      value_template: > 
+        {%- if (states.input_boolean.black_ink_reminder.state == "on")
+            and (states.sensor.inklevel_black.state|int < 20) -%}
+          on
+        {%- else -%}
+          off
+        {%- endif -%}         
+    yellow_ink_reminder_email:
+      friendly_name: "Send Yellow Ink Reminder"
+      value_template: > 
+        {%- if (states.input_boolean.yellow_ink_reminder.state == "on")
+            and (states.sensor.inklevel_yellow.state|int < 20) -%}
+          on
+        {%- else -%}
+          off
+        {%- endif -%} 
+    magenta_ink_reminder_email:
+      friendly_name: "Send Magenta Ink Reminder"
+      value_template: > 
+        {%- if (states.input_boolean.magenta_ink_reminder.state == "on")
+            and (states.sensor.inklevel_magenta.state|int < 20) -%}
+          on
+        {%- else -%}
+          off
+        {%- endif -%}          
+    cyan_ink_reminder_email:
+      friendly_name: "Send Cyan Ink Reminder"
+      value_template: > 
+        {%- if (states.input_boolean.cyan_ink_reminder.state == "on")
+            and (states.sensor.inklevel_cyan.state|int < 20) -%}
+          on
+        {%- else -%}
+          off
+        {%- endif -%}          
 # Weather prediction
 - platform: yr 
 # Time/Date Sensors
@@ -48,3 +114,12 @@
     - precip_accumulation
     - wind_speed
     - cloud_cover
+#EPSON Workforce
+- platform: epsonworkforce
+  host: 192.168.1.159
+  monitored_conditions:
+  - black
+  - yellow
+  - magenta
+  - cyan
+  - clean     

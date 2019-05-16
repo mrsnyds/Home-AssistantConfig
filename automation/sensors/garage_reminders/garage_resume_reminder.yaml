@@ -1,0 +1,38 @@
+id: garage_resume_open_reminder
+alias: Garage Resume Open Reminder
+initial_state: 'on'
+
+# Four triggers to reset the notification mechanism back to "on": 
+# - timer finishes
+# - input number slider to "0" in front end
+# - input boolean turned back "on" in front end
+# - binary_sensor.wyze_contact_2 goes "off" (garage door closes)
+
+trigger:
+- platform: event
+  event_type: timer.finished
+  event_data:
+    entity_id: timer.garage_reminder_pause
+- platform: state  
+  entity_id: input_boolean.garage_reminder_on 
+  to: 'on'
+  for: '00:00:02' 
+- platform: state  
+  entity_id: input_number.garage_notification_pause
+  to: '0.0'
+  for: '00:00:02'  
+- platform: state  
+  entity_id: binary_sensor.wyze_contact_2
+  to: 'off'  
+action:
+- service: timer.cancel
+  data:
+    entity_id: timer.garage_reminder_pause
+- service: input_boolean.turn_on
+  data:
+    entity_id: input_boolean.garage_reminder_on 
+- data:
+    entity_id: input_number.garage_notification_pause
+    value: 0
+  service: input_number.set_value
+- event: garage_open  

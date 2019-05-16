@@ -1,0 +1,11 @@
+id: someone_returns
+alias: Home - Someone Returns
+trigger:
+- entity_id: group.home
+  platform: state
+  to: home
+action:
+# Adjust lighting if arriving close to dusk
+- service: script.return_home_lighting
+# Turn off dehumidifier upon return, unless it is scheduled to be on.
+- service: script.stop_dehumidifying_on_return

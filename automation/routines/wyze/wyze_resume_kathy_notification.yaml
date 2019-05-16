@@ -1,0 +1,16 @@
+id: wyze_resume_kathy_notification
+alias: Wyze Resume KATHY Notification
+# Toggle the notification for Wyze Cam back on  
+# when timer finishes
+trigger:
+- platform: event
+  event_type: timer.finished
+  event_data:
+    entity_id: timer.wyze_pause_kathy
+action:
+- service: ifttt.trigger
+  data: {"event":"notify_on", "value1":"Hello World!", "target": "kathy_key"}  
+- data:
+    entity_id: input_number.wyze_notification_kathy
+    value: 0
+  service: input_number.set_value    

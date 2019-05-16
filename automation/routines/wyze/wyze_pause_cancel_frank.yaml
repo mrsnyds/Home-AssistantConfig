@@ -1,10 +1,10 @@
-id: wyze_cancel_pause
-alias: Wyze Cancel Pause Resume Notification
+id: wyze_cancel_FRANK_pause
+alias: Wyze Cancel Pause Resume FRANK Notification
 # Toggle the notification for Wyze Cam back on  
 # when slider moved to "0"
 trigger:
   platform: state  
-  entity_id: input_number.wyze_notification
+  entity_id: input_number.wyze_notification_frank
   to: '0.0'
   for: '00:00:02'
 action:
@@ -12,4 +12,4 @@ action:
   data:
     entity_id: timer.wyze_pause_frank
 - service: ifttt.trigger
-  data: {"event":"notify_on", "value1":"Hello World!"}  
+  data: {"event":"notify_on", "value1":"Hello World!", "target": "frank_key"}  

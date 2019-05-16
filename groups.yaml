@@ -35,7 +35,8 @@
       - switch.merry_and_bright    
       - switch.sony_tv     
       - media_player.lg_tv
-      
+
+# These two groups overlap, as indicated in the friendly name      
   not_home_on:
     name: Entities Left On When Not Home
     entities:
@@ -46,9 +47,9 @@
       - switch.sony_tv      
       - media_player.denon_main
       - media_player.denon_remote
-      - switch.coffee_wemo
-      - switch.merry_and_bright
-
+      - switch.aeon_coffee
+      - switch.garage_door
+      # - switch.merry_and_bright -- remove when dehumidifier/add back when it's the heater
   not_home_random:
     name: Entities Left On Except Random Lights
     entities:
@@ -57,6 +58,7 @@
       - switch.sony_tv            
       - media_player.denon_main
       - media_player.denon_remote
-      - switch.coffee_wemo
-      - switch.merry_and_bright
+      - switch.aeon_coffee
+      - switch.garage_door
+      # - switch.merry_and_bright -- remove when dehumidifier/add back when it's the heater
       

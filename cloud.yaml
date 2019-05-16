@@ -1,0 +1,20 @@
+google_actions:
+  filter:
+    include_entities:
+      - script.pause_roku
+      - script.resume_roku
+      - script.commercial_skip
+    include_domains:
+      - switch
+      - light
+      - scene
+      - fan
+      - media_player
+    # exclude_entities:
+      # - switch.outside
+  entity_config:
+    light.dining_room_tree:
+      name: Dining Room Tree Switch
+      aliases:
+       - dining room star
+      room: Dining Room

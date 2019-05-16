@@ -1,0 +1,15 @@
+id: wyze_cancel_KATHY_pause
+alias: Wyze Cancel Pause Resume KATHY Notification
+# Toggle the notification for Wyze Cam back on  
+# when slider moved to "0"
+trigger:
+  platform: state  
+  entity_id: input_number.wyze_notification_kathy
+  to: '0.0'
+  for: '00:00:02'
+action:
+- service: timer.cancel
+  data:
+    entity_id: timer.wyze_pause_kathy
+- service: ifttt.trigger
+  data: {"event":"notify_on", "value1":"Hello World!", "target": "kathy_key"}  

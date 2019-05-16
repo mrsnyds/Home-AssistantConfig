@@ -15,6 +15,7 @@
       - light.kitchen_table
       - light.living_room_pepe
       - light.living_room_sue
+      - light.dining_room_tree
 
   - platform: group
     name: Upstairs Lights
@@ -120,4 +121,7 @@
     entity_id: switch.kitchen_tree
   - platform: switch
     name: Merry And Bright
-    entity_id: switch.merry_and_bright      
+    entity_id: switch.merry_and_bright
+  - platform: switch
+    name: Frank Desk Lamp
+    entity_id: switch.desk_wemo    

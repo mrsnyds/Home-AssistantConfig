@@ -7,13 +7,18 @@ initial_state: 'on'
 # of the ON and OFF values set in the front end.
 trigger:
 - platform: time_pattern
-  minutes: '/6'  
+  minutes: '/6' 
+# Only turn on/off if the device is active as a dehumidifier switch AND
+# the scheduling feature is turned on.  
 condition:
   condition: and
   conditions:
     - condition: state
-      entity_id: 'input_boolean.evening_dehumidifier'
-      state: 'on'      
+      entity_id: 'input_boolean.dehumidifier_active'
+      state: 'on'
+    - condition: state
+      entity_id: 'input_boolean.dehumidifier_scheduling'
+      state: 'on'         
     - condition: or
       conditions:
         - condition: template

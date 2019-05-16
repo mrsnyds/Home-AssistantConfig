@@ -1,0 +1,38 @@
+id: garage_pause_open_reminder
+alias: Garage Pause Open Reminder
+initial_state: 'on'
+
+# By setting a number of minutes to pause in the front end (input_number slider)
+# an input_boolean for notification reminders on or off will be turned off, and 
+# a timer will start a countdown to turn it back on. The triggers to turn it back
+# on (timer finishing being one of three) are documented in "garage_resume_reminder.yaml".
+# 
+# NOTE: the input boolean can be turned off without the pause timer mechanism, in 
+# which case the reminders are suppressed until boolean is turned back on manually.
+
+# IDEA ... could create "restart timer" button that generates the custome event
+# that is a second trigger for this ... say, if you want to "re-up'" for another 60 min.
+
+trigger:
+- platform: state  
+  entity_id: input_number.garage_notification_pause
+- platform: event
+  event_type: restart_garage_pause_timer
+condition:
+  condition: numeric_state
+  entity_id: input_number.garage_notification_pause
+  above: 0
+action:
+- service: timer.cancel
+  data:
+    entity_id: timer.garage_reminder_pause
+- delay: '00:00:01'
+- service: timer.start
+  data_template:
+    entity_id: timer.garage_reminder_pause
+    duration: '{{(states("input_number.garage_notification_pause") | int) * 60}}'
+- service: input_boolean.turn_off
+  data:
+    entity_id: input_boolean.garage_reminder_on
+  
+# *********** RESET THE *1 TO *60 AND SCRIPT INTERVAL IS CURRENTLY 10 SECONDS!  

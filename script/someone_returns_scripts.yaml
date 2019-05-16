@@ -1,0 +1,49 @@
+# These scripts are to be run when someone returns home
+
+# Adjust lighting if arriving near dusk
+return_home_lighting:
+  alias: Return Home Lighting
+  sequence:
+  - after: sunset
+    after_offset: -00:40:00
+    condition: sun   
+  - data:
+      entity_id: light.upstairs_lights, light.downstairs_lights
+    service: light.turn_off
+  - delay: '2'
+  - data:
+      entity_id: light.garage_entry_garage_entry, light.front_foyer_foyer_star
+    service: light.turn_on
+  - delay: '300'
+  - data:
+      entity_id: light.garage_entry_garage_entry, light.front_foyer_foyer_star
+    service: light.turn_off  
+    
+# Turn off dehumidifier upon return, unless it is scheduled to be on.
+# Looks complex, but logic just creates datetime objects from the schedule on/off strings,
+# and then compares "now" to those times to see if the next scheduled action is on or off.
+stop_dehumidifying_on_return:
+  alias: Stop Dehumidifying On Return
+  sequence:
+  - entity_id: switch.merry_and_bright
+    service_template: >
+      {% set dehum_off = as_timestamp(strptime("%s %s"|format(as_timestamp(now())
+        | timestamp_custom('%Y-%m-%d'),states.input_datetime.hum_off.state), 
+        "%Y-%m-%d %H:%M:%S"))%}
+      {% set dehum_on = as_timestamp(strptime("%s %s"|format(as_timestamp(now())
+        | timestamp_custom('%Y-%m-%d'),states.input_datetime.hum_on.state), 
+        "%Y-%m-%d %H:%M:%S"))%}
+      {% set current_time = as_timestamp(now())%}
+      {% if ((current_time < dehum_on) and (current_time < dehum_off))
+        or ((current_time > dehum_on) and (current_time > dehum_off)) -%}
+        {%- if (dehum_on < dehum_off) -%}
+          switch.turn_off
+        {%- else -%}
+          homeassistant.update_entity
+        {%- endif -%}
+      {%- elif (dehum_on < dehum_off) -%}
+        homeassistant.update_entity
+      {%- elif (dehum_on > dehum_off) -%}
+        switch.turn_off
+      {%- endif -%}
+      

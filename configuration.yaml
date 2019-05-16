@@ -22,6 +22,9 @@ http:
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+zwave:
+  usb_path: /dev/ttyACM0
+
 # Components with !include
 automation: !include_dir_list automation
 script: !include_dir_merge_named script
@@ -44,7 +47,10 @@ panel_custom:
 
 # Lovelace Card Custom Updater
 custom_updater:
-
+  card_urls:
+    - https://raw.githubusercontent.com/ljmerza/waze-card/master/custom_updater.json
+    - https://raw.githubusercontent.com/kalkih/mini-media-player/master/tracker.json
+    
 discovery:
   ignore:
     - igd
@@ -64,24 +70,58 @@ input_boolean:
   morning_heat:
     name: Morning Heat On
     icon: mdi:thermometer-lines
-  evening_dehumidifier:
+  dehumidifier_active:
     name: Activate Dehumidifier
     icon: mdi:water   
-  
+  dehumidifier_scheduling:
+    name: Dehumidifier Scheduling
+    icon: mdi:calendar
+  garage_reminder_on:
+    name: Garage Reminders On
+    icon: mdi:reminder    
+  # EPSON low ink reminders ON/OFF
+  black_ink_reminder:
+    name: Black Ink Reminders
+    icon: mdi:reminder
+  yellow_ink_reminder:
+    name: Yellow Ink Reminders
+    icon: mdi:reminder
+  magenta_ink_reminder:
+    name: Magenta Ink Reminders
+    icon: mdi:reminder
+  cyan_ink_reminder:
+    name: Cyan Ink Reminders
+    icon: mdi:reminder    
 
 input_number:
-  garage_closed:
-    name: Garage Closed Repetition
-    min: -5
-    max: 5
-    step: 1         
-  wyze_notification:
+  garage_notification_pause:
+    name: Pause Garage Open Reminders
+    min: 0
+    max: 240
+    step: 15  
+    unit_of_measurement: minutes
+    icon: mdi:play-pause
+  garage_notification_interval:
+    name: Garage Notification
+    min: 10
+    max: 30
+    step: 5  
+    unit_of_measurement: minutes
+    icon: mdi:numeric     
+  wyze_notification_frank:
     name: Pause Wyze Notification - Frank
     min: 0
     max: 240
     step: 15  
     unit_of_measurement: minutes
     icon: mdi:camera  
+  wyze_notification_kathy:
+    name: Pause Wyze Notification - Kathy
+    min: 0
+    max: 240
+    step: 15  
+    unit_of_measurement: minutes
+    icon: mdi:camera      
     
 input_datetime:
   hum_off:
@@ -91,26 +131,32 @@ input_datetime:
   hum_on:
     name: Humidifier Time On
     has_date: false
-    has_time: true
-    
+    has_time: true   
+   
+input_text:
+  garage_icon:
+    name: Garage Icon Animation Value
     
 # Timers    
 timer:
   heater_off:
-    duration: '01:30:00' 
+    duration: '01:30:00'
   coffee_off:
-    duration: '02:30:00'       
-  wyze_pause_frank:
-    duration: '01:00:00'  
-  wyze_pause_kathy:
+    duration: '02:30:00'
+  garage_reminder_pause:
     duration: '01:00:00'     
+  wyze_pause_frank:
+    duration: '01:00:00'
+  wyze_pause_kathy:
+    duration: '01:00:00'
     
 # Sensors
 
     
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
  
 ## Amazon AWS Components
 aws:
@@ -142,16 +188,8 @@ googlehome:
     # - host: 192.168.1.113
   
 #Cloud
-# cloud:
-  # google_actions:
-    # filter:
-      # include_domains:
-        # - switch
-        # - light
-        # - script
-        # - media_player  
-  
-## GOOGLE ===================
+cloud: !include cloud.yaml
+
   
 lutron_caseta:
   host: 192.168.1.106
@@ -161,7 +199,9 @@ lutron_caseta:
 
 ##ifttt Configuration
 ifttt:
-  key: !secret ifttt_key  
+  key: 
+    frank_key: !secret ifttt_key_frank
+    kathy_key: !secret ifttt_key_kathy
   
 # Dark Sky Weather
 weather:

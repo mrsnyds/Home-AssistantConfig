@@ -1,0 +1,15 @@
+id: wyze_sense_triggers
+alias: Wyze Sense Triggers
+# Receives an IFTTT webhook post that has data to identify a Wyze Sense
+# device (binary_sensor.wyze_ ...), and gives corresponding new state.  
+# Mqtt.publish service updates the binary sensor with the new ON/OFF state.
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482WYZ
+action:
+- service: mqtt.publish
+  data_template:
+    topic: "wyze/{{trigger.data.topic}}"
+    payload: "{{trigger.data.payload}}"
+    retain: "true"

@@ -5,9 +5,9 @@ trigger:
 - platform: webhook
   webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482COFFEE
 action:
-- entity_id: switch.coffee_wemo
+- entity_id: switch.aeon_coffee
   service_template: >
-    {%- if states("switch.coffee_wemo") == "on" -%}
+    {%- if states("switch.aeon_coffee") == "on" -%}
       homeassistant.update_entity
     {%- else -%}
       switch.turn_on

@@ -1,0 +1,27 @@
+id: wyze_pause_timer_KATHY
+alias: Wyze Pause KATHY Notification Timer
+initial_state: 'on'
+trigger:
+- platform: state  
+  entity_id: input_number.wyze_notification_kathy
+- platform: event
+  event_type: restart_timer
+  event_data:
+    message: restart    
+condition:
+  condition: numeric_state
+  entity_id: input_number.wyze_notification_kathy
+  above: 0
+action:
+- service: timer.cancel
+  data:
+    entity_id: timer.wyze_pause_kathy
+- delay: '00:00:01'
+- service: timer.start
+  data_template:
+    entity_id: timer.wyze_pause_kathy
+    duration: '{{(states("input_number.wyze_notification_kathy") | int) * 60}}'
+- service: ifttt.trigger
+  data: {"event":"notify_off", "value1":"Hello World!", "target": "kathy_key"}  
+    
+# follows pattern in comments inside wyze_pause_frank_time.yaml

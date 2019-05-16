@@ -1,0 +1,36 @@
+id: garage_icon_animation
+alias: Garage Icon Animation Set
+initial_state: 'on'
+# The icon for the garage_door is an entity_picture_template that is based on
+# the state of "input_text.garage_icon". Garage icon will be set to either 
+# "opening", "closing", "opened", or "closed" by this automation.
+#######################
+# The first trigger is an "opening" or "closing" "garage_icon" event
+# that is fired when the switch.gargage_door is toggled.
+# The value for input_text.garage_icon will be set to either "opening"
+# or "closing" for a period of time, until new sensor state is reported.
+# The second trigger is when the binary_sensor.wyze_contact_2 (garage door)
+# has reported a state change to "on" or "off".
+# Now set the input_text.garage_icon to "opened", or "closed"
+
+trigger:
+- platform: event
+  event_type: garage_icon
+- platform: mqtt
+  topic: wyze/contact2
+
+action:
+- service: input_text.set_value
+  data_template:
+    entity_id: input_text.garage_icon
+    value: >-
+      {% if trigger.platform == 'event' %}
+        {{trigger.event.data.icon}}
+      {% elif trigger.payload == 'ON' %}
+        opened
+      {% else %}
+        closed
+      {% endif %}
+  
+  
+# input_number.garage_notification_interval{{((as_timestamp((now()))- (as_timestamp(states.binary_sensor.wyze_contact_2.last_changed)))/60)|int > 15}}  

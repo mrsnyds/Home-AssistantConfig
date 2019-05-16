@@ -1,0 +1,34 @@
+id: wyze_wind_pause
+alias: Wyze Pause for Wind
+# Pause the Wyze notifications for a bit if wind speed exceeds some threshold set below.
+# Wind speed is updated every 5 minutes, so check once every 5 minutes.
+# This will pause both Frank and Kathy's Wyze notifications
+trigger:
+- platform: state
+  entity_id: sensor.dark_sky_wind_speed
+# Only turn on/off if the device is active as a dehumidifier switch AND
+# the scheduling feature is turned on.  
+condition:
+  condition: template
+  value_template: "{{states.sensor.dark_sky_wind_speed.state | float > 10}}"
+action:
+# Cancel existing timer and set input to # minutes for the pause
+- service: timer.cancel
+  data:
+    entity_id: timer.wyze_pause_frank, timer.wyze_pause_kathy
+- delay: '00:00:01'
+- service: input_number.set_value
+  data:
+    entity_id: input_number.wyze_notification_frank
+    value: 30    
+- service: input_number.set_value
+  data:
+    entity_id: input_number.wyze_notification_kathy
+    value: 30  
+# If we ar setting the input number to the value it was before, 
+# the state is not updated and the timer restart will not occur.
+# So the custom event below is needed as a second trigger for the 
+# automation that starts the timer.
+- event: restart_timer
+  event_data:
+    message: restart  

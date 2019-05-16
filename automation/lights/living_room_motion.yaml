@@ -1,0 +1,27 @@
+id: living_room_motion_lights
+alias: Living Room Motion Lights
+# Turn living room lights on and off based on binary_sensor.wyze_motion_1
+initial_state: 'on'
+trigger:
+  platform: state
+  entity_id: binary_sensor.wyze_motion_1
+condition:
+    condition: or  
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-01:30:00" 
+      - condition: sun
+        before: sunrise
+        before_offset: "01:30:00" 
+action:
+  service_template: >
+    {%- if trigger.to_state.state == 'on' -%}
+      light.turn_on
+    {%- else -%}
+      light.turn_off
+    {%- endif -%}  
+  data:
+    entity_id: light.frank_desk_lamp
+
+  

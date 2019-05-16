@@ -1,10 +1,14 @@
 open_garage:
   alias: Open Garage
   sequence:
-  - data: 
-      event: "Nexx_Open"
-      value1: "Open the garage"
-    service: ifttt.trigger    
+  # - data: 
+      # event: "Nexx_Open"
+      # value1: "Open the garage"
+    # service: ifttt.trigger
+  - service: ifttt.trigger
+    data: {"event":"Nexx_Open", "value1":"Hello World!"}
+  - service: light.turn_on
+    entity_id: light.living_room_sue  
 close_garage:
   alias: Close Garage
   sequence:
@@ -12,3 +16,17 @@ close_garage:
       event: "close_Nexx"
       value1: "Open the garage"
     service: ifttt.trigger 
+send_garage_reminder:
+  alias: Send Garage Reminder
+  sequence:
+  - service: notify.aws_lambda_1      
+    data_template:
+      target: 'arn:aws:lambda:us-west-2:152624716237:function:myPythonSMS'
+      message: >  
+        GARAGE OPEN since {{as_timestamp(states.binary_sensor.wyze_contact_2.last_changed)
+        | timestamp_custom('%I:%M %p')}}. Close or control notifications:
+        https://mrsnyds.duckdns.org:8123/lovelace/0
+      data:
+        send_to: frank  
+  - delay: '00:{{states.input_number.garage_notification_interval.state|int}}:00'
+  - event: garage_open        

@@ -67,3 +67,26 @@ input_boolean.test_toggle:
   friendly_name: Morning Heat On
   icon: mdi:thermometer-lines
 media_player.basement_roku_2: {}
+input_datetime.hum_off:
+  friendly_name: Dehumidifier Time Off
+input_datetime.hum_on:
+  friendly_name: Dehumidifier Time On
+binary_sensor.wyze_contact_2:
+  friendly_name: Nexx Garage Door
+binary_sensor.wyze_contact_1:
+  friendly_name: Beer & Wine Refrigerator
+media_player.lg_tv:
+  icon: mdi:television
+media_player.denon_main:
+  icon: mdi:audio-video
+media_player.denon_remote:
+  icon: mdi:audio-video
+switch.aeon_labs_zw096_smart_switch_6_switch:
+  friendly_name: Coffee AEON
+  node_id: 2
+switch.aeon_coffee:
+  icon: mdi:coffee
+switch.desk_wemo:
+  icon: mdi:desk-lamp
+light.frank_desk_lamp:
+  icon: mdi:desk-lamp

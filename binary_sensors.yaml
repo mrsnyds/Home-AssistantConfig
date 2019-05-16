@@ -3,9 +3,21 @@
   state_topic: "phone/bluetooth"
   device_class: connectivity
 - platform: mqtt
-  name: "Garage Door"
+  name: "OLD Garage Door"
   state_topic: "nexx/status"
   device_class: garage_door  
+- platform: mqtt
+  name: "Wyze Motion 1"
+  state_topic: "wyze/motion1"
+  device_class: motion  
+- platform: mqtt
+  name: "Wyze Contact 1"
+  state_topic: "wyze/contact1"
+  device_class: door   
+- platform: mqtt
+  name: "Wyze Contact 2"
+  state_topic: "wyze/contact2"
+  device_class: garage_door
 - platform: ping
   name: My PC PING
   host: 192.168.1.102

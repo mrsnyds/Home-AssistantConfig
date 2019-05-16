@@ -8,10 +8,9 @@ trigger:
   event_data:
     entity_id: timer.wyze_pause_frank
 action:
-- service: notify.pushbullet
-  data:
-    message: wyze_notify_on
+- service: ifttt.trigger
+  data: {"event":"notify_on", "value1":"Hello World!", "target": "frank_key"}  
 - data:
-    entity_id: input_number.wyze_notification
+    entity_id: input_number.wyze_notification_frank
     value: 0
   service: input_number.set_value    

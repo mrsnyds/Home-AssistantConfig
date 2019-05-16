@@ -2,7 +2,9 @@ morning_lights:
   alias: Morning Wakeup Lights
   sequence:     
   - condition: sun
-    before: sunrise      
+    before: sunrise 
+  - service: automation.turn_off
+    entity_id: automation.living_room_motion_lights
   - service: python_script.light_fader
     data:
       entity_id: light.kitchen_table
@@ -22,5 +24,8 @@ morning_lights:
       entity_id: light.living_room_sue
       start_level_pct: 0
       end_level_pct: 60
-      transition: '00:15:00'    
+      transition: '00:15:00'  
+  - delay: '00:40:00'      
+  - service: automation.turn_on
+    entity_id: automation.living_room_motion_lights      
       

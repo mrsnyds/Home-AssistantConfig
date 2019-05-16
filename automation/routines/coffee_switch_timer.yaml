@@ -2,7 +2,7 @@ id: coffee_switch_timer
 alias: Coffee Switch Timer
 trigger:
   platform: state  
-  entity_id: switch.coffee_wemo
+  entity_id: switch.aeon_coffee
   from: 'off'
   to: 'on'
 action:

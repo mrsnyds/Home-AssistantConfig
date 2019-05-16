@@ -1,0 +1,32 @@
+# When one of the EPSON cartridges is changed, and state is > 20, reset email reminders.
+# This handles the case where the 'input_select.pause_<color>_ink' was set to 'Paused'.
+id: epson_ink_reminder_reset
+alias: Epson Ink Reminder Reset
+initial_state: 'on'
+
+trigger:
+- platform: numeric_state
+  entity_id: sensor.inklevel_black
+  above: 19
+- platform: numeric_state
+  entity_id: sensor.inklevel_yellow
+  above: 19
+- platform: numeric_state
+  entity_id: sensor.inklevel_magenta
+  above: 19
+- platform: numeric_state
+  entity_id: sensor.inklevel_cyan
+  above: 19   
+action:
+- data_template: 
+    entity_id: >
+      {%- if 'black' in trigger.entity_id-%}
+        input_boolean.black_ink_reminder
+      {%- elif 'yellow' in trigger.entity_id-%}
+        input_boolean.yellow_ink_reminder
+      {%- elif 'magenta' in trigger.entity_id-%}
+        input_boolean.magenta_ink_reminder
+      {%- else -%}
+        input_boolean.cyan_ink_reminder
+      {%- endif -%}
+  service: input_boolean.turn_on  

@@ -8,5 +8,5 @@ trigger:
     entity_id: timer.coffee_off
 action:
 - data:
-    entity_id: switch.coffee_wemo
+    entity_id: switch.aeon_coffee
   service: switch.turn_off    
