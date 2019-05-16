@@ -1,16 +1,34 @@
 Log of items changed since last commit:
 
-- added second IFTTT key for Kathy ... and duplicated Wyze notifications for her account
+- added second IFTTT key ... and duplicated Wyze notifications for second Wyze account
 - added automation to turn off Wyze notifications when wind speed > 10 mph
 - improved comments in "groups.yaml" for the "group.not_home_on" and "group.not_home_random" groups
-- added "card-modder.js" custom card from Thomas Love
 - added new "epsonworkforce" sensor platform
 	- created low ink template sensor ... if any color < 50%, sensor.low_ink state is "on"
 	- created conditional card to display ink levels if low_ink sensor is on
+- added Wyze Sense motion sensor and contact sensors (IFTTT sends webhook trigger for sensor change)
+- added Aeotec Z stick and smart plug
+- swapped out Wemo Coffee plug for new Aeotec
+
+LOTS OF UI UPDATES
+
+- updated Custom Updater and added some new Lovelace card types:
+	- button-card
+	- card-modder
+	- popup-card
+	- lovelace-card-templater
+
 - created custom card to display EPSON ink levels in front end
 	- created a combination vertical/horizontal stack
 	- has a meter that changes color as ink gets low
 	- title shows the water drop icon with custom color to match ink
+
+- consolidated media controls, dehumidifier scheduling, and garage door reminder settings
+with a press & hold pop-up card to replace more info'
+
+- created an animated GIF for garage door opening/closing, and and icon animation input_text entity that is
+used with an entity picture card that is templated to alternate between static icons, and animated icons, 
+based on if the input_text entity says "opening, closing, closed", or "open".  (garage_icon_animation.yaml)
 
 BASEMENT DEHUMIDIFIER ENHANCENTS
 - commented dehumidifer (switch.merry_and_bright) out of not_home_on and not_home_random
