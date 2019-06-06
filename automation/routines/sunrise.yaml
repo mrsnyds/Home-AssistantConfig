@@ -15,6 +15,15 @@ condition:
 action:
 - service: light.turn_off
   entity_id: light.exterior_front_door, light.patio_back_door, light.dining_room_tree
+# Turn garage reminder notifications back off if someone is home
+- data:
+    entity_id: input_boolean.garage_reminder_on
+  service_template: >-
+    {% if is_state("group.home","home") %}
+      input_boolean.turn_off
+    {% else %}
+      homeassistant.update_entity
+    {% endif %} 
 # Turn Wyze Cam notifications back on
 - service: ifttt.trigger
   data: {"event":"notify_on", "value1":"Hello World!"} 

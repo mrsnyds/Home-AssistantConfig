@@ -90,3 +90,21 @@ switch.desk_wemo:
   icon: mdi:desk-lamp
 light.frank_desk_lamp:
   icon: mdi:desk-lamp
+binary_sensor.aeotec_limited_zwa005_trisensor_sensor:
+  node_id: 5
+sensor.aeotec_limited_zwa005_trisensor_temperature:
+  node_id: 5
+sensor.aeotec_limited_zwa005_trisensor_luminance:
+  node_id: 5
+sensor.aeotec_limited_zwa005_trisensor_burglar:
+  node_id: 5
+sensor.aeotec_limited_zwa005_trisensor_alarm_type:
+  node_id: 5
+sensor.aeotec_limited_zwa005_trisensor_alarm_level:
+  node_id: 5
+zwave.aeotec_limited_zwa005_trisensor:
+  node_id: 5
+sensor.aeotec_limited_zwa005_trisensor_sourcenodeid:
+  node_id: 5
+automation.living_room_motion_lights:
+  friendly_name: Living Room Motion

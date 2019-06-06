@@ -1,0 +1,27 @@
+id: frank_to_work
+alias: Frank to Work Garage Reminder ON
+initial_state: 'on'
+
+# Turns on reminders temporarily in case the garage close misfired
+# and the garage is still open as I head down the road.  Triggered
+# by a webhook in my Tasker "phone ready" routine.  Turns them back off
+# after checking.
+
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482RMD
+action:
+- data:
+    entity_id: input_boolean.garage_reminder_on 
+  service: input_boolean.turn_on
+- delay: '00:15:00'
+- event: garage_open
+- delay: '00:00:10'
+- data:
+    entity_id: input_boolean.garage_reminder_on 
+  service_template: >-
+    {% if is_state("group.home","home") %}
+      input_boolean.turn_off
+    {% else %}
+      homeassistant.update_entity
+    {% endif %}    

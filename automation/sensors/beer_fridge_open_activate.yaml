@@ -1,0 +1,12 @@
+id: beer_fridge_open_activate
+alias: Beer Fridge Open
+# If the reminders automation is turned off in the front end,
+# reactivate it when the door is closed.
+initial_state: 'on'
+trigger:
+- platform: state
+  entity_id: binary_sensor.wyze_contact_1
+  to: 'off' 
+action:
+  service: automation.turn_on
+  entity_id: automation.beer_fridge_open

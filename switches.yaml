@@ -9,7 +9,44 @@
       command_on: 'echo -e -n "\x01\x08\x00\xF2\x51\x01\x01\x05\x01\x50" > /dev/serial/by-id/usb-0658_0200-if00'  
       command_off: 'echo -e -n "\x01\x08\x00\xF2\x51\x01\x00\x05\x01\x51" > /dev/serial/by-id/usb-0658_0200-if00'  
 - platform: template
-  switches:    
+  switches:
+  
+    # Switches to Enable/Disable Motion Trigger Automations
+    living_room_motion:
+      value_template: "{{ is_state('automation.living_room_motion_lights', 'on') }}"
+      friendly_name: Living Room Motion Sensor
+      turn_on:
+      - service: automation.turn_on
+        data: 
+          entity_id: automation.living_room_motion_lights
+      turn_off:
+      - service: automation.turn_off
+        data: 
+          entity_id: automation.living_room_motion_lights      
+      icon_template: >-
+        {% if is_state('automation.living_room_motion_lights', 'on') %}
+          mdi:run
+        {% else %}
+          mdi:walk
+        {% endif %}   
+    family_room_motion:
+      value_template: "{{ is_state('automation.family_room_motion', 'on') }}"
+      friendly_name: Family Room Motion Sensor
+      turn_on:
+      - service: automation.turn_on
+        data: 
+          entity_id: automation.family_room_motion
+      turn_off:
+      - service: automation.turn_off
+        data: 
+          entity_id: automation.family_room_motion      
+      icon_template: >-
+        {% if is_state('automation.family_room_motion', 'on') %}
+          mdi:run
+        {% else %}
+          mdi:walk
+        {% endif %}     
+        
     # NEXX Garage switch
     garage_door:
       value_template: "{{ is_state('binary_sensor.wyze_contact_2', 'on') }}"
@@ -20,12 +57,30 @@
       - event: garage_icon
         event_data:
           icon: opening
+      - delay: '00:00:40'
+      - event: garage_icon
+        event_data_template:
+          icon: >-
+            {% if is_state('binary_sensor.wyze_contact_2', 'on') %}
+              open
+            {% else %}
+              closed
+            {% endif %}          
       turn_off:
       - service: ifttt.trigger
         data: {"event":"close_Nexx", "value1":"Hello World!"}
       - event: garage_icon
         event_data:
-          icon: closing        
+          icon: closing
+      - delay: '00:00:40'
+      - event: garage_icon
+        event_data_template:
+          icon: >-
+            {% if is_state('binary_sensor.wyze_contact_2', 'on') %}
+              opened
+            {% else %}
+              closed
+            {% endif %}
       icon_template: >-
         {% if is_state('binary_sensor.wyze_contact_2', 'on') %}
           mdi:garage-open
@@ -71,7 +126,8 @@
         data:
           entity_id: remote.family_room
           command: home                        
-      turn_off:                    
+      turn_off:             
+      - service: script.denon_main_off
       - service: remote.send_command
         data:
           entity_id: remote.family_room
@@ -80,11 +136,7 @@
       - service: remote.send_command
         data:
           entity_id: remote.family_room
-          command: power    
-      - delay: "00:00:05"
-      - service: media_player.turn_off
-        data: 
-          entity_id: media_player.denon_main            
+          command: power   
       icon_template: >-
         {% if (is_state('media_player.denon_main', 'on') and 
         state_attr('media_player.denon_main', 'source') == 'Roku') 

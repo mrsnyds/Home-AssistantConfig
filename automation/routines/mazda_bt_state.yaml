@@ -1,0 +1,12 @@
+id: mazda bt state
+alias: Mazda BT ON-OFF
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482BT
+action:
+- data_template:
+    payload: "{{trigger.data.payload}}"
+    retain: '1'
+    topic: phone/bluetooth
+  service: mqtt.publish
+initial_state: 'on'

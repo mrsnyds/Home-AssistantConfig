@@ -23,3 +23,5 @@
   host: 192.168.1.102
   count: 2
   scan_interval: 30 
+# - platform: apcupsd
+  # name: Basement UPS

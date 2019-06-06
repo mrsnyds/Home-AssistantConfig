@@ -1,0 +1,12 @@
+id: waze_eta_notification
+alias: Waze ETA Notification
+initial_state: 'on'
+trigger:
+- platform: webhook
+  webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482NTFY 
+condition: []
+action:
+- service: notify.html_notifier
+  data_template:
+    message: '{{trigger.json.message}}'
+    title: WAZE ETA         

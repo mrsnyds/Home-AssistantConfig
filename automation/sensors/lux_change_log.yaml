@@ -1,0 +1,13 @@
+id: lux_change_log
+alias: Lux Change Log
+initial_state: 'on'
+trigger:   
+  platform: time_pattern
+  # You can also match on interval. This will match every 5 minutes
+  minutes: '/10'  
+action:
+- service: ifttt.trigger
+  data_template: {"event":"lux_level", 
+    "value1": '{{(states.sensor.zooz_zse40_4_in_1_sensor_luminance.state|int)/10}}',
+    "value2": '{{states.sensor.dark_sky_cloud_coverage.state | int}}',
+    "value3": '{{states.sensor.solar_angle.state|float}}'}  

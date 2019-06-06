@@ -9,3 +9,12 @@ action:
 - service: script.return_home_lighting
 # Turn off dehumidifier upon return, unless it is scheduled to be on.
 - service: script.stop_dehumidifying_on_return
+# Turn off open garage reminders
+- data:
+    entity_id: input_boolean.garage_reminder_on 
+  service_template: >-    
+    {% if states.sun.sun.state == 'below_horizon' %}
+      homeassistant.update_entity
+    {% else %}
+      input_boolean.turn_off
+    {% endif %}    

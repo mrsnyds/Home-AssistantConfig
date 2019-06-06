@@ -14,14 +14,21 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
+
 http:
   base_url: !secret my_url 
   ssl_certificate: /ssl/fullchain.pem
-  ssl_key: /ssl/privkey.pem  
+  ssl_key: /ssl/privkey.pem    
   
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+# UPS Monitoring - APC UPS
+# apcupsd:
+  # host: 192.168.1.105
+  # port: 3551
+  
+# Z-Wave
 zwave:
   usb_path: /dev/ttyACM0
 

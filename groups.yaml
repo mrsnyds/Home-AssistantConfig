@@ -2,13 +2,11 @@
     name: Anyone Home
     view: no
     entities:
-      - device_tracker.1921681111
-      - device_tracker.192_168_1_115
+      - person.frank_snyder
+      - person.kathy_snyder
       - device_tracker.alexandasiphone_2      
       - device_tracker.ellendunsiphone
       - device_tracker.iphone_4
-      - device_tracker.google_maps_109448847750537552828
-      - device_tracker.google_maps_115006492650333848573
       - device_tracker.iphone
       - device_tracker.c7fdf446c7d140d79be5ca770da0a9e6
       
@@ -62,3 +60,12 @@
       - switch.garage_door
       # - switch.merry_and_bright -- remove when dehumidifier/add back when it's the heater
       
+  random_lights:
+    name: Lights For Randomizing
+    entities:
+      - light.family_room_chair_lamp
+      - light.family_room_sofa_lamp
+      - light.kitchen_table
+      - light.living_room_pepe
+      - light.master_bedroom_night_stand
+      - light.guest_room_guest_room_light

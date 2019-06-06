@@ -1,0 +1,7 @@
+denon_main_off:
+  alias: Denon Main Off
+  sequence:       
+  - delay: "00:00:05"          
+  - service: media_player.turn_off
+    data: 
+      entity_id: media_player.denon_main

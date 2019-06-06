@@ -1,0 +1,13 @@
+id: beer_fridge_open
+alias: Beer Fridge Open
+# Notify us if the beer fridge is open for more than 3 minutes.
+initial_state: 'on'
+trigger:
+- platform: state
+  entity_id: binary_sensor.wyze_contact_1
+  to: 'on' 
+  for: '00:03:00'
+- platform: event
+  event_type: beer_fridge_open  
+action:
+  service: script.beer_fridge_reminder

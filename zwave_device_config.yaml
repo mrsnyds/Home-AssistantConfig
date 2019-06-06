@@ -1,0 +1,6 @@
+sensor.aeotec_limited_zwa005_trisensor_temperature:
+  ignored: false
+  polling_intensity: 0
+sensor.aeotec_limited_zwa005_trisensor_burglar:
+  ignored: false
+  polling_intensity: 0

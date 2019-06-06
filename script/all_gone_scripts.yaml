@@ -1,41 +1,93 @@
 # In the time frame between sunset and 23:00 (when random lights are on), 
-# the SMS is only sent if some device other than random lights are on.
+# turn off all the lights except member of group.random_lights, and the
+# sunset exterior lights.
 all_gone_random:
   alias: All Gone Random
   sequence: 
-  - condition: template
-    value_template: '{{ is_state("group.not_home_random", "on") }}'
   - condition: state
     entity_id: input_boolean.guest_mode
     state: 'off'        
-  - service: notify.aws_lambda_1
+  - service: light.turn_off
     data_template:
-      target: 'arn:aws:lambda:us-west-2:152624716237:function:myPythonSMS'
-      message: >  
-        MESSAGE FROM YOUR HOUSE: I am turning your lights on and off randomly,
-        which means you are away at night, but other stuff should be off.  Check here:
-        https://mrsnyds.duckdns.org:8123/lovelace/0 
-      data:
-        send_to: frank_and_kathy        
+      entity_id: >-
+        {%- for entity_id in states.group.all_lights.attributes.entity_id 
+          if (state_attr(entity_id, 'Device ID') != None) and 
+          (entity_id not in states.group.random_lights.attributes.entity_id) and 
+          (entity_id not in ["light.exterior_front_door", "light.patio_back_door"]) -%} 
+          {%- if loop.last -%}
+            {{entity_id}}
+          {%-  else -%}
+            {{entity_id}}{{', '}}
+          {%- endif -%}
+        {%- endfor -%}
+
 # In the time frame is NOT between sunset and 23:00 (when random lights are on), 
-# send teh SMS if anything is on that should not be on.
+# turn off all the lights except sunset exterior lights
 all_gone_not_random:
   alias: All Gone Not Random
   sequence:
-  - condition: template
-    value_template: '{{ is_state("group.not_home_on", "on") }}'  
   - condition: state
     entity_id: input_boolean.guest_mode
     state: 'off'    
-  - service: notify.aws_lambda_1      
+  - service: light.turn_off
     data_template:
-      target: 'arn:aws:lambda:us-west-2:152624716237:function:myPythonSMS'
-      message: >  
-        MESSAGE FROM YOUR HOUSE: Nobody (that we track) has been home for over
-        15 minutes, but stuff is on.  Check here:
-        https://mrsnyds.duckdns.org:8123/lovelace/0
-      data:
-        send_to: frank_and_kathy
+      entity_id: >-
+        {%- for entity_id in states.group.all_lights.attributes.entity_id 
+          if (state_attr(entity_id, 'Device ID') != None) and 
+          (entity_id not in ["light.exterior_front_door", "light.patio_back_door"]) -%} 
+          {%- if loop.last -%}
+            {{entity_id}}
+          {%-  else -%}
+            {{entity_id}}{{', '}}
+          {%- endif -%}
+        {%- endfor -%}
+
+# Switches to turn off when we are gone.  Just edit the in list [ ]
+all_gone_switches_off:
+  alias: All Gone Switches Off
+  sequence:
+  - service: switch.turn_off
+    data_template:
+      entity_id: >-
+        {%- for entity_id in states.group.all_switches.attributes.entity_id 
+          if (entity_id in 
+          ["switch.aeon_coffee",
+          "switch.desk_wemo",
+          "switch.family_room_ceiling_fan",
+          "switch.guest_room_lamp",
+          "switch.kitchen_tree",
+          "switch.lg_basement_tv",
+          "switch.garage_door",
+          "switch.my_pc"])  -%} 
+          {# sometimes ... switch.merry_and_bright, switch.dining_room_tree #}
+          {%- if loop.last -%}
+            {{entity_id}}
+          {%-  else -%}
+            {{entity_id}}{{', '}}
+          {%- endif -%}
+        {%- endfor -%} 
+  - service: media_player.turn_off
+    data: 
+      entity_id: media_player.denon_remote
+# This switch needs special treatment
+  - data:
+      entity_id: media_player.denon_main
+    service_template: >-
+      {% if (is_state('media_player.denon_main', 'on') and 
+        state_attr('media_player.denon_main', 'source') != 'Roku') %}
+        media_player.turn_off
+      {% else %}
+        homeassistant.update_entity
+      {% endif %}
+  - data:
+      entity_id: switch.sony_tv
+    service_template: >-
+      {% if states.switch.sony_tv == on %}
+        switch.turn_off
+      {% else %}
+        homeassistant.update_entity
+      {% endif %}
+
 # Turn on dehumidifier when we are gone, with the below conditions being met
 dehumidify_while_gone:
   alias: Dehumidify While Gone

@@ -1,0 +1,15 @@
+id: frank_desk_lamp.yaml
+alias: Frank Desk Lamp
+trigger: 
+- platform: state 
+  entity_id: switch.my_pc
+  to: 'on'
+- platform: state 
+  entity_id: switch.my_pc
+  to: 'off'
+action:
+- data:
+    entity_id: light.frank_desk_lamp 
+  service_template: "light.turn_{{trigger.to_state.state}}"
+# Turns on/off the desk lamp when the PC state changes
+    

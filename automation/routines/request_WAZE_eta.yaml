@@ -1,9 +1,3 @@
-# This webhook accepts message data to be used in a post data to an AWS
-# Lambda function that will REQUEST a Waze ETA message to be sent via
-# AWS SNS in a Lambda function.  The client making the post (either Tasker or 
-# an IFTTT request) will send the text to be used in the SMS as "message"
-# and HASS will send that data along to AWS, and will calculate the WAZE
-# travel time.
 id: request waze_eta 
 alias: Request Waze ETA
 initial_state: 'on'
@@ -12,15 +6,38 @@ trigger:
 - platform: webhook
   webhook_id: 9CAA2BA12E56F242D34B3BEC199396E9F4EC7751DF5F5EDE85DF75C482WZ
 action:
-- data_template: 
-    target: "arn:aws:lambda:us-west-2:152624716237:function:waze_ETA"  
-    data:       
-      message: '{{trigger.data.message}}'
-      status: '{{trigger.data.status}}'
-      travel_time: "{{states('sensor.frank_eta_home')}}"
-      update_time: '{{states.sensor.frank_eta_home.last_updated}}'
-    title: "asking lambda for ETA"
-    message: "add travel time to now for ETA"
-  service: notify.aws_lambda_1
-  
-  
+- service: notify.html_notifier
+  data_template:
+    message: >-
+      {# CONVERT WAZE TRAVEL TIME TO SECONDS #}
+      {% set duration_seconds = ((states.sensor.frank_eta_home.attributes.duration * 60)|int) %}
+      {# BASE TIME WILL VARY DEPENDING ON "DRIVING" OR "LEAVING #}
+      {% if trigger.data.status == "driving" %}
+        {% set base_time = as_timestamp(states.sensor.frank_eta_home.last_updated) %}
+      {% elif trigger.data.status == "leaving" %}
+        {% set base_time = (as_timestamp(now()) + 300)%}          
+      {% else %}
+        {% set base_time = as_timestamp(states.sensor.frank_eta_home.last_updated) %}        
+      {% endif %}
+      {# CALCULATE THE ETA FOR INSERTION INTO THE MESSAGE #}
+      {% set eta_home = (base_time + duration_seconds)|timestamp_custom("%I:%M %p") %}
+      {# RETURN THE MESSAGE TO SEND #}
+      {{trigger.data.message}} {{eta_home}}.    
+    title: >-
+      {# CONVERT WAZE TRAVEL TIME TO SECONDS #}
+      {% set duration_seconds = ((states.sensor.frank_eta_home.attributes.duration * 60)|int) %}
+      {# BASE TIME WILL VARY DEPENDING ON "DRIVING" OR "LEAVING #}
+      {% if trigger.data.status == "driving" %}
+        {% set base_time = as_timestamp(states.sensor.frank_eta_home.last_updated) %}
+      {% elif trigger.data.status == "leaving" %}
+        {% set base_time = (as_timestamp(now()) + 300)%}          
+      {% else %}
+        {% set base_time = as_timestamp(states.sensor.frank_eta_home.last_updated) %}        
+      {% endif %}
+      {# CALCULATE THE ETA FOR INSERTION INTO THE MESSAGE #}
+      {% set eta_home = (base_time + duration_seconds)|timestamp_custom("%I:%M %p") %}
+      {# RETURN THE MESSAGE TO SEND #}
+      Frank ETA {{eta_home}}
+    data:
+      ttl: 86400
+      priority: high    

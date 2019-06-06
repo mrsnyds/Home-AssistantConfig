@@ -122,4 +122,20 @@
   - yellow
   - magenta
   - cyan
-  - clean     
+  - clean
+
+# APC USD UPS Sensor  
+# - platform: apcupsd
+  # resources:
+    # - model
+    # - bcharge
+    # - linev
+    # - status
+    # - bcharge
+    # - timeleft
+    # - mbattchg
+    # - mintimel
+    # - maxtime
+    # - maxlinev
+    # - minlinev
+    # - outputv

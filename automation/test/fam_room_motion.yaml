@@ -1,0 +1,24 @@
+id: fam_room_motion
+alias: Family Room Motion
+initial_state: true
+trigger:
+- platform: state
+  entity_id: sensor.zooz_zse40_4_in_1_sensor_burglar
+action:
+  service_template: >-
+    {% if is_state("sensor.zooz_zse40_4_in_1_sensor_burglar","8") 
+     and is_state("light.family_room_lights","off") 
+     and (states.sensor.zooz_zse40_4_in_1_sensor_luminance.state|int) < 100 %}
+      light.turn_on
+    {% elif is_state("sensor.zooz_zse40_4_in_1_sensor_burglar","0") 
+     and is_state("light.family_room_chair_lamp","off")
+     and is_state("light.family_room_sofa_lamp","off")
+     and is_state("light.family_room_spotlights","off")
+     and is_state("light.family_room_fireplace","off")
+     and is_state("light.family_room_ceiling_fan_light","off")
+     and (states.sensor.zooz_zse40_4_in_1_sensor_luminance.state|int) < 100 %}
+      light.turn_off
+    {% else %}
+      homeassistant.update_entity
+    {% endif %}
+  entity_id: light.family_room_floor_lamp

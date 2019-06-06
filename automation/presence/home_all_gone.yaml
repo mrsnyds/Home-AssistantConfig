@@ -3,8 +3,8 @@ alias: Home - All Gone Stuff On
 # When nobody is home for 15 minutes, fire various scripts.
 initial_state: 'on'
 trigger:
-- entity_id: group.home
-  platform: state
+- platform: state
+  entity_id: group.home
   to: 'not_home'
   for:
     hours: 0
@@ -23,3 +23,5 @@ action:
 # Conditions in the script will verify the dehumidifier switch is active.
 # The dehumidifier schedule will control on/off if gone for more than a day.
 - service: script.dehumidify_while_gone
+# Turns off selected switches, if left on
+- service: script.all_gone_switches_off

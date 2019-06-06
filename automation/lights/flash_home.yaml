@@ -15,3 +15,8 @@ condition:
   - fri
 action:
 - service: script.flash_lights
+- service: notify.html_notifier
+  data:
+    message: "Lights flashing and garage opening."
+    target: frank_pixel
+    title: Garage Open Lights Flash

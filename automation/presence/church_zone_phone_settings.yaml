@@ -1,0 +1,21 @@
+id: church_zone_phone_settings
+alias: Church Zone Phone Settings
+trigger:
+- entity_id: device_tracker.google_maps_109448847750537552828
+  event: enter
+  platform: zone
+  zone: zone.church
+- entity_id: device_tracker.google_maps_109448847750537552828
+  event: leave
+  platform: zone
+  zone: zone.church  
+action:
+- data_template:
+    message: >-
+      {% if trigger.event == "enter" %}
+        At_Church
+      {% else %}
+        Left_Church      
+      {% endif %}          
+  service: notify.pushbullet
+initial_state: true

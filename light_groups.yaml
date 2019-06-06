@@ -55,6 +55,7 @@
     entities:
       - light.living_room_pepe
       - light.living_room_sue
+      - light.frank_desk_lamp
  
   - platform: group
     name: Kitchen Lights
