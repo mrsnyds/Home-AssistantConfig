@@ -8,4 +8,6 @@ Log of items changed since last commit:
 - various tweaks to WyzeSense sensor implementation
 - various tweaks to Zwave config
 - added a ZOOZ 4-in-1 sensor
+- updated all_gone scripts to just turn stuff off,
+  instead of notify 
 
